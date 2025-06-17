@@ -1,0 +1,6 @@
+connections:
+  local_test:
+    server: "PC\\SQLEXPRESS"
+    database: "ETL_Test"
+    driver: "ODBC Driver 17 for SQL Server"
+    trusted_connection: "yes"
