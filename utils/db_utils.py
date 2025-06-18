@@ -1,6 +1,7 @@
 ''' File for database utilities : Connections, queries, etc. '''
 import yaml
 import pyodbc
+from utils.file_utils import read_yaml_file
 import os
 from dotenv import load_dotenv
 
@@ -8,14 +9,14 @@ load_dotenv()
 
 def connect_to_database(db_config_yaml):
 
-    with open(db_config_yaml, "r", encoding="utf-8") as f:
-        config = yaml.safe_load(f)["connections"]["local_test"]
-        server = config["server"]
-        database = config["database"]
-        driver = config["driver"]
-        username = os.getenv('username')
-        password = os.getenv('password')
-        trusted_connection = config["trusted_connection"]
+    yaml_content = read_yaml_file(db_config_yaml)
+    config = yaml_content["connections"]["local_test"]
+    server = config["server"]
+    database = config["database"]
+    driver = config["driver"]
+    username = os.getenv('username')
+    password = os.getenv('password')
+    trusted_connection = config["trusted_connection"]
     try:
         connection = pyodbc.connect(f'Driver={driver};'
                         f'UID={username};'
@@ -43,4 +44,5 @@ def test_connection(db_config_yaml):
             connection.close()
     else:
         print("Failed to connect to the database.")
+
 

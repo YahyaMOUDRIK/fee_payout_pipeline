@@ -3,11 +3,10 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pyodbc
-import yaml
 import pandas as pd
 from datetime import datetime
 from utils.db_utils import connect_to_database
-
+from utils.file_utils import read_yaml_file
     
 def extract_data_from_db(db_config_yaml, query):
     try:
@@ -66,8 +65,8 @@ def generate_simt_line(fields, data_row=None):
 
 def generate_simt_file(yaml_path, df, output_path):
 
-    with open(yaml_path, "r", encoding="utf-8") as f:
-        structure = yaml.safe_load(f)["integration_file_structure"]
+    
+    structure = read_yaml_file(yaml_path)["integration_file_structure"]
 
     lines = []
     # Header
