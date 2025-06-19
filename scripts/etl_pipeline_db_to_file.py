@@ -9,9 +9,8 @@ from utils.db_utils import QUERY
 
 
 if __name__ == "__main__":
-    output_path = "generated_files/test_output.txt"
+    
     db_config_yaml = "config/db_config.yaml"
-
     # Connect to the database and extract data
     data = extract_data_from_db(db_config_yaml, QUERY)
 
@@ -23,4 +22,4 @@ if __name__ == "__main__":
 
     # Generate the SIMT file
     yaml_path = "config/file_structure/fee_payouts_structure.yaml"
-    generate_simt_file(yaml_path, df, output_path)
+    generate_simt_file(yaml_path, df, 'docx')  # Change to 'txt' if you want a text file
