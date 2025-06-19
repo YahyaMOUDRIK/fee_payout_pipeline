@@ -1,3 +1,4 @@
 .env
 venv
 ~$*
+data/fee_payouts/

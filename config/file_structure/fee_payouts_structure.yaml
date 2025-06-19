@@ -70,7 +70,7 @@ integration_file_structure:
           obligatoire: false
           type: text
           longueur: 446
-          default: ""
+          default: " "
 
   Detail:
     Fields: 
@@ -102,7 +102,7 @@ integration_file_structure:
           longueur: 3
           default: ""
 
-      - par_defaut:
+      - par_defaut_1:
           starting position: 11
           obligatoire: false
           type: text
@@ -177,94 +177,94 @@ integration_file_structure:
           obligatoire: false
           type: text
           longueur: 21
-          default: '00'
+          default: ''
 
       - par_defaut_2:
-          starting position: 81
+          starting position: 100
           obligatoire: true
           type: text
           longueur: 2
           default: "00"
 
       - zone_reservee_3:
-          starting position: 83
+          starting position: 102
           obligatoire: false
           type: text
           longueur: 34
           default: ""
 
       - par_defaut_3:
-          starting position: 117
+          starting position: 136
           obligatoire: true
           type: text
           longueur: 1
           default: "1"
 
       - nom_donneur_ordre:
-          starting position: 118
+          starting position: 137
           obligatoire: true
           type: text
           longueur: 35
           default: ""
 
       - nom_benificiaire:
-          starting position: 153
+          starting position: 172
           obligatoire: true
           type: text
           longueur: 35
           default: ""
 
       - rib_donneur_ordre:
-          starting position: 188
+          starting position: 207
           obligatoire: true
           type: text
           longueur: 24
           default: ""
 
       - rib_beneficiaire:
-          starting position: 212
+          starting position: 231
           obligatoire: true
           type: text
           longueur: 24
           default: ""
 
       - zone_reservee_4:
-          starting position: 236
+          starting position: 255
           obligatoire: false
           type: text
           longueur: 8
           default: ""
 
       - motif_virement:
-          starting position: 244
+          starting position: 263
           obligatoire: false
           type: text
           longueur: 35
           default: ""
 
       - reference_virement:
-          starting position: 279
+          starting position: 298
           obligatoire: false
           type: text
           longueur: 12
           default: ""
 
       - zone_reservee_5:
-          starting position: 291
+          starting position: 310
           obligatoire: false
           type: text
           longueur: 163
           default: ""
 
       - reference_beneficiaire:
-          starting position: 454
+          starting position: 473
           obligatoire: false
           type: integer
           longueur: 20
           default: 0
 
       - zone_reservee_6:
-          starting position: 474
+          starting position: 493
           obligatoire: false
           type: text
           longueur: 7
