@@ -35,11 +35,23 @@ def generate_simt_file(yaml_path, df, extension="txt"):
 
     # Detail
     #lines.append("\nDETAIL\n")
+    nb_virements = 0
+    montant_total = 0
     for _, row in df.iterrows():
         lines.append(generate_simt_line(structure["Detail"]["Fields"], data_row=row))
+        nb_virements += 1
+        montant_total += int(row["montant"])
 
     # Footer
     #lines.append("\nFOOTER\n")
+
+    footer_fields = structure["Footer"]["Fields"]
+    for field in footer_fields:
+        if "nombre_total_virements" in field:
+            field["nombre_total_virements"]["default"] = nb_virements
+        if "montant_total_virements" in field:
+            field["montant_total_virements"]["default"] = montant_total
+
     lines.append(generate_simt_line(structure["Footer"]["Fields"]))
 
     # Write to file
