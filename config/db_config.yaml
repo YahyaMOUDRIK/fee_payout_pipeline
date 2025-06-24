@@ -1,6 +1,28 @@
-connections:
-  local_test:
-    server: "PC\\SQLEXPRESS"
-    database: "ETL_Test"
-    driver: "ODBC Driver 17 for SQL Server"
-    trusted_connection: "yes"
+connections :
+
+    databases :
+
+      MAMDA_APP :
+        - server: "PC\\SQLEXPRESS"
+        - database: "MAMDA_App"
+        - driver: "ODBC Driver 17 for SQL Server"
+        - trusted_connection: "yes"      
+
+      MCMA_APP :
+        - server: "PC\\SQLEXPRESS"
+        - database: "MCMA_App"
+        - driver: "ODBC Driver 17 for SQL Server"
+        - trusted_connection: "yes"  
+
+      MCMA_AUTO :
+        - server: "PC\\SQLEXPRESS"
+        - database: "MCMA_Auto"
+        - driver: "ODBC Driver 17 for SQL Server"
+        - trusted_connection: "yes"   
+
+      MAMDA_AUTO :
+        - server: "PC\\SQLEXPRESS"
+        - database: "MCMA_Auto"
+        - driver: "ODBC Driver 17 for SQL Server"
+        - trusted_connection: "yes"       
+      

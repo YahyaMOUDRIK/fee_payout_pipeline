@@ -7,9 +7,9 @@ import pyodbc
 import pandas as pd
 from utils.db_utils import connect_to_database
 
-def extract_data_from_db(db_config_yaml, query):
+def extract_data_from_db(db_config, query):
     try:
-        connection = connect_to_database(db_config_yaml)
+        connection = connect_to_database(db_config)
         cursor = connection.cursor()
         cursor.execute(query)
         columns = [column[0] for column in cursor.description]
