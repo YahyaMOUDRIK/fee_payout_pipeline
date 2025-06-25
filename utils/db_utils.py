@@ -7,28 +7,53 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-QUERY = """
+# QUERY = """
+#     SELECT 
+#         '04' AS code_enregistrement,
+#         '020' AS code_operation,  -- valeur fixe
+#         d.CodeBanque AS code_banque,
+#         d.CodeGuichet AS code_guichet,
+#         p.ReferenceRemise AS ref_beneficiaire,
+#         'MAD' AS code_devise,      -- valeur fixe
+#         p.Montant AS montant,
+#         FORMAT(p.DateExecution, 'yyyyMMdd') AS date_execution,
+#         '00' AS par_defaut,        -- valeur fixe
+#         d.Nom AS nom_donneur_ordre,
+#         b.Nom AS nom_beneficiaire,
+#         b.RIB AS rib_beneficiaire,
+#         p.Motif AS motif_virement
+#     FROM 
+#         Paiements p
+#     JOIN 
+#         Benificiare b ON p.BenificiareID = b.BenificiareID
+#     JOIN 
+#         DonneursOrdre d ON p.DonneurID = d.DonneurID;
+#     """  
+
+def generate_query(schema):
+    QUERY = f"""
     SELECT 
-        '04' AS code_enregistrement,
-        '020' AS code_operation,  -- valeur fixe
-        d.CodeBanque AS code_banque,
-        d.CodeGuichet AS code_guichet,
-        p.ReferenceRemise AS ref_beneficiaire,
-        'MAD' AS code_devise,      -- valeur fixe
-        p.Montant AS montant,
-        FORMAT(p.DateExecution, 'yyyyMMdd') AS date_execution,
-        '00' AS par_defaut,        -- valeur fixe
-        d.Nom AS nom_donneur_ordre,
-        b.Nom AS nom_beneficiaire,
-        b.RIB AS rib_beneficiaire,
-        p.Motif AS motif_virement
+        b.code_banque,
+        t.date_emission,
+        t.num_remise,
+        b.reference,
+        t.montant,
+        t.date_execution,
+        d.nom as nom_donneur,
+        b.nom as nom_beneficiaire, 
+        d.rib as rib_donneur,
+        b.rib as rib_beneficiaire, 
+        t.motif_virement,
+        t.reference_virement,
+        t.reference_remise
     FROM 
-        Paiements p
-    JOIN 
-        Benificiare b ON p.BenificiareID = b.BenificiareID
-    JOIN 
-        DonneursOrdre d ON p.DonneurID = d.DonneurID;
-    """  
+        {schema}.Transactions t
+    JOIN	
+        {schema}.Donneur d ON t.rib_donneur = d.rib
+    JOIN
+        {schema}.Beneficiaire b ON t.rib_beneficiaire = b.rib
+    """
+    return QUERY
 
 def connect_to_database(db_config_yaml):
 
