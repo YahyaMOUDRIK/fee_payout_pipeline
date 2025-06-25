@@ -1,96 +1,505 @@
 table_mapping : 
 
-  Header: 
+  Applications : 
 
-    Fields_mapping :
+    Accident_travail : 
 
-      - num_donneur_ordre:
-          database_name : "DonneursDB"
-          table_name : "Donneur"
-          column_name : "num_donneur"
-      
-      - reference_remise:
-          database_name : "PaiementsDB"
-          table_name : "Paiement"
-          column_name : "reference_remise"
+        Schema : 'AccTra'  
+
+        Mamda :
+
+          Database : 'MAMDA_App'
+
+          Header: 
+
+            Fields_mapping :
+
+              - num_donneur_ordre:
+                  table_name : "Donneur"
+                  column_name : "num_donneur"
+              
+              - reference_remise:
+                  table_name : "Paiement"
+                  column_name : "reference_remise"
+            
+          Detail:
+
+            Fields_mapping :
+              
+              - code_banque_receptrice :
+                  table_name : "Beneficiaire"
+                  column_name : "code_banque"
+              
+              - date_emission:
+                  table_name : "Transactions"
+                  column_name : "date_emission"
+              
+              - num_remise :
+                  table_name : "Transactions"
+                  column_name : "num_remise"
+              
+              - ref_beneficiaire : 
+                  table_name : "Beneficiaire"
+                  column_name : "reference"
+              
+              # - code_devise : 
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "code"
+              
+              # - decimal_devise :
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "decimal_places"
+              
+              - montant :
+                table_name : "Transactions"  
+                column_name : "montant"
+              
+              - date_execution :
+                table_name : "Transactions"
+                column_name : "date_execution"
+              
+              - nom_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "nom"
+              
+              - nom_benificiaire :
+                table_name : "Beneficiaire"
+                column_name : "nom"
+              
+              - rib_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "rib"
+              
+              - rib_beneficiaire :
+                table_name : "Beneficiaire" 
+                column_name : "rib"
+              
+              - motif_virement :
+                table_name : "Paiement"
+                column_name : "motif"
+              
+              - reference_virement :
+                table_name : "Transactions"
+                column_name : "reference_virement"
+              
+              - reference_beneficiaire :
+                table_name : "Beneficiaire"
+                column_name : "reference"
+
+        Mcma :
+
+          Database : 'MCMA_App'
+
+          Header: 
+
+            Fields_mapping :
+
+              - num_donneur_ordre:
+                  table_name : "Donneur"
+                  column_name : "num_donneur"
+              
+              - reference_remise:
+                  table_name : "Paiement"
+                  column_name : "reference_remise"
+            
+          Detail:
+
+            Fields_mapping :
+              
+              - code_banque_receptrice :
+                  table_name : "Beneficiaire"
+                  column_name : "code_banque"
+              
+              - date_emission:
+                  table_name : "Transactions"
+                  column_name : "date_emission"
+              
+              - num_remise :
+                  table_name : "Transactions"
+                  column_name : "num_remise"
+              
+              - ref_beneficiaire : 
+                  table_name : "Beneficiaire"
+                  column_name : "reference"
+              
+              # - code_devise : 
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "code"
+              
+              # - decimal_devise :
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "decimal_places"
+              
+              - montant :
+                table_name : "Transactions"  
+                column_name : "montant"
+              
+              - date_execution :
+                table_name : "Transactions"
+                column_name : "date_execution"
+              
+              - nom_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "nom"
+              
+              - nom_benificiaire :
+                table_name : "Beneficiaire"
+                column_name : "nom"
+              
+              - rib_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "rib"
+              
+              - rib_beneficiaire :
+                table_name : "Beneficiaire" 
+                column_name : "rib"
+              
+              - motif_virement :
+                table_name : "Paiement"
+                column_name : "motif"
+              
+              - reference_virement :
+                table_name : "Transactions"
+                column_name : "reference_virement"
+              
+              - reference_beneficiaire :
+                table_name : "Beneficiaire"
+                column_name : "reference"
+
+    Risque_divers : 
+
+        Schema : 'RD'  
+
+        Mamda :
+
+          Database : 'MAMDA_App'
+
+          Header: 
+
+            Fields_mapping :
+
+              - num_donneur_ordre:
+                  table_name : "Donneur"
+                  column_name : "num_donneur"
+              
+              - reference_remise:
+                  table_name : "Paiement"
+                  column_name : "reference_remise"
+            
+          Detail:
+
+            Fields_mapping :
+              
+              - code_banque_receptrice :
+                  table_name : "Beneficiaire"
+                  column_name : "code_banque"
+              
+              - date_emission:
+                  table_name : "Transactions"
+                  column_name : "date_emission"
+              
+              - num_remise :
+                  table_name : "Transactions"
+                  column_name : "num_remise"
+              
+              - ref_beneficiaire : 
+                  table_name : "Beneficiaire"
+                  column_name : "reference"
+              
+              # - code_devise : 
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "code"
+              
+              # - decimal_devise :
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "decimal_places"
+              
+              - montant :
+                table_name : "Transactions"  
+                column_name : "montant"
+              
+              - date_execution :
+                table_name : "Transactions"
+                column_name : "date_execution"
+              
+              - nom_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "nom"
+              
+              - nom_benificiaire :
+                table_name : "Beneficiaire"
+                column_name : "nom"
+              
+              - rib_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "rib"
+              
+              - rib_beneficiaire :
+                table_name : "Beneficiaire" 
+                column_name : "rib"
+              
+              - motif_virement :
+                table_name : "Paiement"
+                column_name : "motif"
+              
+              - reference_virement :
+                table_name : "Transactions"
+                column_name : "reference_virement"
+              
+              - reference_beneficiaire :
+                table_name : "Beneficiaire"
+                column_name : "reference"
+
+        Mcma :
+
+          Database : 'MCMA_App'
+
+          Header: 
+
+            Fields_mapping :
+
+              - num_donneur_ordre:
+                  table_name : "Donneur"
+                  column_name : "num_donneur"
+              
+              - reference_remise:
+                  table_name : "Paiement"
+                  column_name : "reference_remise"
+            
+          Detail:
+
+            Fields_mapping :
+              
+              - code_banque_receptrice :
+                  table_name : "Beneficiaire"
+                  column_name : "code_banque"
+              
+              - date_emission:
+                  table_name : "Transactions"
+                  column_name : "date_emission"
+              
+              - num_remise :
+                  table_name : "Transactions"
+                  column_name : "num_remise"
+              
+              - ref_beneficiaire : 
+                  table_name : "Beneficiaire"
+                  column_name : "reference"
+              
+              # - code_devise : 
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "code"
+              
+              # - decimal_devise :
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "decimal_places"
+              
+              - montant :
+                table_name : "Transactions"  
+                column_name : "montant"
+              
+              - date_execution :
+                table_name : "Transactions"
+                column_name : "date_execution"
+              
+              - nom_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "nom"
+              
+              - nom_benificiaire :
+                table_name : "Beneficiaire"
+                column_name : "nom"
+              
+              - rib_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "rib"
+              
+              - rib_beneficiaire :
+                table_name : "Beneficiaire" 
+                column_name : "rib"
+              
+              - motif_virement :
+                table_name : "Paiement"
+                column_name : "motif"
+              
+              - reference_virement :
+                table_name : "Transactions"
+                column_name : "reference_virement"
+              
+              - reference_beneficiaire :
+                table_name : "Beneficiaire"
+                column_name : "reference"
     
-  Detail:
+    Automobile : 
 
-    Fields_mapping :
-      
-      - code_banque_receptrice :
-          database_name : "BeneficiairesDB"
-          table_name : "Beneficiaire"
-          column_name : "code_banque"
-      
-      - date_emission:
-          database_name : "TransactionsDB"
-          table_name : "TransactionLog"
-          column_name : "date_emission"
-      
-      - num_remise :
-          database_name : "TransactionsDB"
-          table_name : "TransactionLog"
-          column_name : "num_remise"
-      
-      - ref_beneficiaire : 
-          database_name : "BeneficiairesDB"
-          table_name : "Beneficiaire"
-          column_name : "reference"
-      
-      - code_devise : 
-          database_name : "DeviseDB"
-          table_name : "Devise"
-          column_name : "code"
-      
-      - decimal_devise :
-          database_name : "DeviseDB"
-          table_name : "Devise"
-          column_name : "decimal_places"
-      
-      - montant :
-        database_name : "TransactionsDB"
-        table_name : "TransactionLog"  
-        column_name : "montant"
-      
-      - date_execution :
-        database_name : "TransactionsDB"
-        table_name : "TransactionLog"
-        column_name : "date_execution"
-      
-      - nom_donneur_ordre :
-        database_name : "DonneursDB"
-        table_name : "Donneur"
-        column_name : "nom"
-      
-      - nom_benificiaire :
-        database_name : "BeneficiairesDB"
-        table_name : "Beneficiaire"
-        column_name : "nom"
-      
-      - rib_donneur_ordre :
-        database_name : "DonneursDB"
-        table_name : "Donneur"
-        column_name : "rib"
-      
-      - rib_beneficiaire :
-        database_name : "BeneficiairesDB"   
-        table_name : "Beneficiaire" 
-        column_name : "rib"
-      
-      - motif_virement :
-        database_name : "PayementsDB"
-        table_name : "Paiement"
-        column_name : "motif"
-      
-      - reference_virement :
-        database_name : "TransactionsDB"
-        table_name : "TransactionLog"
-        column_name : "reference_virement"
-      
-      - reference_beneficiaire :
-        database_name : "BeneficiairesDB"
-        table_name : "Beneficiaire"
-        column_name : "reference"
-  
- 
+        Mamda :
+
+          Database : 'MAMDA_Auto'
+
+          Header: 
+
+            Fields_mapping :
+
+              - num_donneur_ordre:
+                  table_name : "Donneur"
+                  column_name : "num_donneur"
+              
+              - reference_remise:
+                  table_name : "Paiement"
+                  column_name : "reference_remise"
+            
+          Detail:
+
+            Fields_mapping :
+              
+              - code_banque_receptrice :
+                  table_name : "Beneficiaire"
+                  column_name : "code_banque"
+              
+              - date_emission:
+                  table_name : "Transactions"
+                  column_name : "date_emission"
+              
+              - num_remise :
+                  table_name : "Transactions"
+                  column_name : "num_remise"
+              
+              - ref_beneficiaire : 
+                  table_name : "Beneficiaire"
+                  column_name : "reference"
+              
+              # - code_devise : 
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "code"
+              
+              # - decimal_devise :
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "decimal_places"
+              
+              - montant :
+                table_name : "Transactions"  
+                column_name : "montant"
+              
+              - date_execution :
+                table_name : "Transactions"
+                column_name : "date_execution"
+              
+              - nom_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "nom"
+              
+              - nom_benificiaire :
+                table_name : "Beneficiaire"
+                column_name : "nom"
+              
+              - rib_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "rib"
+              
+              - rib_beneficiaire :
+                table_name : "Beneficiaire" 
+                column_name : "rib"
+              
+              - motif_virement :
+                table_name : "Paiement"
+                column_name : "motif"
+              
+              - reference_virement :
+                table_name : "Transactions"
+                column_name : "reference_virement"
+              
+              - reference_beneficiaire :
+                table_name : "Beneficiaire"
+                column_name : "reference"
+
+        Mcma :
+
+          Database : 'MCMA_Auto'
+
+          Header: 
+
+            Fields_mapping :
+
+              - num_donneur_ordre:
+                  table_name : "Donneur"
+                  column_name : "num_donneur"
+              
+              - reference_remise:
+                  table_name : "Paiement"
+                  column_name : "reference_remise"
+            
+          Detail:
+
+            Fields_mapping :
+              
+              - code_banque_receptrice :
+                  table_name : "Beneficiaire"
+                  column_name : "code_banque"
+              
+              - date_emission:
+                  table_name : "Transactions"
+                  column_name : "date_emission"
+              
+              - num_remise :
+                  table_name : "Transactions"
+                  column_name : "num_remise"
+              
+              - ref_beneficiaire : 
+                  table_name : "Beneficiaire"
+                  column_name : "reference"
+              
+              # - code_devise : 
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "code"
+              
+              # - decimal_devise :
+              #     database_name : "DeviseDB"
+              #     table_name : "Devise"
+              #     column_name : "decimal_places"
+              
+              - montant :
+                table_name : "Transactions"  
+                column_name : "montant"
+              
+              - date_execution :
+                table_name : "Transactions"
+                column_name : "date_execution"
+              
+              - nom_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "nom"
+              
+              - nom_benificiaire :
+                table_name : "Beneficiaire"
+                column_name : "nom"
+              
+              - rib_donneur_ordre :
+                table_name : "Donneur"
+                column_name : "rib"
+              
+              - rib_beneficiaire :
+                table_name : "Beneficiaire" 
+                column_name : "rib"
+              
+              - motif_virement :
+                table_name : "Paiement"
+                column_name : "motif"
+              
+              - reference_virement :
+                table_name : "Transactions"
+                column_name : "reference_virement"
+              
+              - reference_beneficiaire :
+                table_name : "Beneficiaire"
+                column_name : "reference"
