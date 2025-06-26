@@ -1,4 +1,8 @@
 ''' File for database utilities : Connections, queries, etc. '''
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import yaml
 import pyodbc
 from utils.file_utils import read_yaml_file
@@ -30,60 +34,124 @@ load_dotenv()
 #         DonneursOrdre d ON p.DonneurID = d.DonneurID;
 #     """  
 
-def generate_query(schema):
-    QUERY = f"""
-    SELECT 
-        b.code_banque,
-        t.date_emission,
-        t.num_remise,
-        b.reference,
-        t.montant,
-        t.date_execution,
-        d.nom as nom_donneur,
-        b.nom as nom_beneficiaire, 
-        d.rib as rib_donneur,
-        b.rib as rib_beneficiaire, 
-        t.motif_virement,
-        t.reference_virement,
-        t.reference_remise
-    FROM 
-        {schema}.Transactions t
-    JOIN	
-        {schema}.Donneur d ON t.rib_donneur = d.rib
-    JOIN
-        {schema}.Beneficiaire b ON t.rib_beneficiaire = b.rib
-    """
+def generate_query(db, schema = None):
+    if schema :        
+        QUERY = f"""
+        USE {db}
+        GO
+        SELECT 
+            b.code_banque,
+            t.date_emission,
+            t.num_remise,
+            b.reference,
+            t.montant,
+            t.date_execution,
+            d.nom as nom_donneur,
+            b.nom as nom_beneficiaire, 
+            d.rib as rib_donneur,
+            b.rib as rib_beneficiaire, 
+            t.motif_virement,
+            t.reference_virement,
+            t.reference_remise
+        FROM 
+            {schema}.Transactions t
+        JOIN	
+            {schema}.Donneur d ON t.rib_donneur = d.rib
+        JOIN
+            {schema}.Beneficiaire b ON t.rib_beneficiaire = b.rib
+        """
+    else :
+        QUERY = f"""
+        USE {db}
+        GO
+        SELECT 
+            b.code_banque,
+            t.date_emission,
+            t.num_remise,
+            b.reference,
+            t.montant,
+            t.date_execution,
+            d.nom as nom_donneur,
+            b.nom as nom_beneficiaire, 
+            d.rib as rib_donneur,
+            b.rib as rib_beneficiaire, 
+            t.motif_virement,
+            t.reference_virement,
+            t.reference_remise
+        FROM 
+            Transactions t
+        JOIN	
+            Donneur d ON t.rib_donneur = d.rib
+        JOIN
+            Beneficiaire b ON t.rib_beneficiaire = b.rib
+        """
     return QUERY
 
-def connect_to_database(db_config_yaml):
+# def connect_to_database(db_config_yaml):
 
-    yaml_content = read_yaml_file(db_config_yaml)
-    config = yaml_content["connections"]["local_test"]
-    server = config["server"]
-    database = config["database"]
-    driver = config["driver"]
+#     yaml_content = read_yaml_file(db_config_yaml)
+#     config = yaml_content["connections"]["local_test"]
+#     server = config["server"]
+#     database = config["database"]
+#     driver = config["driver"]
+#     username = os.getenv('username')
+#     password = os.getenv('password')
+#     trusted_connection = config["trusted_connection"]
+#     try:
+#         connection = pyodbc.connect(f'Driver={driver};'
+#                         f'UID={username};'
+#                         f'PWD={password};'
+#                         f'SERVER={server};'
+#                         f'Database={database};'
+#                         f'Trusted_Connection={trusted_connection};')
+#         print("Connection to the database was successful.")
+#         return connection
+#     except pyodbc.Error as e:
+#         print(f"Error connecting to database: {e}")
+#         return None
+    
+# def test_connection(db_config_yaml):
+#     connection = connect_to_database(db_config_yaml)
+#     if connection:
+#         try:
+#             cursor = connection.cursor()
+#             cursor.execute("SELECT 1")
+#             print("Connection test successful.")
+#         except pyodbc.Error as e:
+#             print(f"Error during connection test: {e}")
+#         finally:
+#             cursor.close()
+#             connection.close()
+#     else:
+#         print("Failed to connect to the database.")
+
+def connect_to_dbs(db_config_yaml):
+    db_config = read_yaml_file(db_config_yaml)
+    dbs = db_config["connections"]["databases"]
     username = os.getenv('username')
     password = os.getenv('password')
-    trusted_connection = config["trusted_connection"]
-    try:
-        connection = pyodbc.connect(f'Driver={driver};'
-                        f'UID={username};'
-                        f'PWD={password};'
-                        f'SERVER={server};'
-                        f'Database={database};'
-                        f'Trusted_Connection={trusted_connection};')
-        print("Connection to the database was successful.")
-        return connection
-    except pyodbc.Error as e:
-        print(f"Error connecting to database: {e}")
-        return None
-    
-def test_connection(db_config_yaml):
-    connection = connect_to_database(db_config_yaml)
+    connections = {}
+    for key, value in dbs.items() :
+        try:
+            connections[key] = pyodbc.connect(f'Driver={value['driver']};'
+                            f'UID={username};'
+                            f'PWD={password};'
+                            f'SERVER={value['server']};'
+                            f'Database={key};'
+                            f'Trusted_Connection={value['trusted_connection']};')
+            print("Connection to the database was successful.")
+            return connections
+        except pyodbc.Error as e:
+            print(f"Error connecting to database: {e}")
+            return None        
+
+def test_connection(db, db_config_yaml):
+    connections = connect_to_dbs(db_config_yaml)
+    connection = connections[db.lower()]
     if connection:
         try:
             cursor = connection.cursor()
-            cursor.execute("SELECT 1")
+            cursor.execute("SELECT * FROM acctra.donneur")
             print("Connection test successful.")
         except pyodbc.Error as e:
             print(f"Error during connection test: {e}")
@@ -92,5 +160,3 @@ def test_connection(db_config_yaml):
             connection.close()
     else:
         print("Failed to connect to the database.")
-
-
