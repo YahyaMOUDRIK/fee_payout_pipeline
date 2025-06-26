@@ -37,8 +37,6 @@ load_dotenv()
 def generate_query(db, schema = None):
     if schema :        
         QUERY = f"""
-        USE {db}
-        GO
         SELECT 
             b.code_banque,
             t.date_emission,
@@ -62,8 +60,6 @@ def generate_query(db, schema = None):
         """
     else :
         QUERY = f"""
-        USE {db}
-        GO
         SELECT 
             b.code_banque,
             t.date_emission,
@@ -139,7 +135,7 @@ def connect_to_dbs(db_config_yaml):
                             f'SERVER={value['server']};'
                             f'Database={key};'
                             f'Trusted_Connection={value['trusted_connection']};')
-            print("Connection to the database was successful.")
+            print(f"Connection to the database was successful.")
             return connections
         except pyodbc.Error as e:
             print(f"Error connecting to database: {e}")
