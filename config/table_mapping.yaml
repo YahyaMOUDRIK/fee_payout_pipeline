@@ -19,7 +19,7 @@ table_mapping :
                   column_name : "num_donneur"
               
               - reference_remise:
-                  table_name : "Paiement"
+                  table_name : "Transactions"
                   column_name : "reference_remise"
             
           Detail:
@@ -62,23 +62,23 @@ table_mapping :
               
               - nom_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "nom"
+                column_name : "nom_donneur"
               
               - nom_benificiaire :
                 table_name : "Beneficiaire"
-                column_name : "nom"
+                column_name : "nom_beneficiaire"
               
               - rib_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "rib"
+                column_name : "rib_donneur"
               
               - rib_beneficiaire :
                 table_name : "Beneficiaire" 
-                column_name : "rib"
+                column_name : "rib_beneficiaire"
               
               - motif_virement :
-                table_name : "Paiement"
-                column_name : "motif"
+                table_name : "Transactions"
+                column_name : "motifç_virement"
               
               - reference_virement :
                 table_name : "Transactions"
@@ -101,7 +101,7 @@ table_mapping :
                   column_name : "num_donneur"
               
               - reference_remise:
-                  table_name : "Paiement"
+                  table_name : "Transactions"
                   column_name : "reference_remise"
             
           Detail:
@@ -144,23 +144,23 @@ table_mapping :
               
               - nom_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "nom"
+                column_name : "nom_donneur"
               
               - nom_benificiaire :
                 table_name : "Beneficiaire"
-                column_name : "nom"
+                column_name : "nom_beneficiaire"
               
               - rib_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "rib"
+                column_name : "rib_donneur"
               
               - rib_beneficiaire :
                 table_name : "Beneficiaire" 
-                column_name : "rib"
+                column_name : "rib_beneficiaire"
               
               - motif_virement :
-                table_name : "Paiement"
-                column_name : "motif"
+                table_name : "Transactions"
+                column_name : "motifç_virement"
               
               - reference_virement :
                 table_name : "Transactions"
@@ -187,7 +187,7 @@ table_mapping :
                   column_name : "num_donneur"
               
               - reference_remise:
-                  table_name : "Paiement"
+                  table_name : "Transactions"
                   column_name : "reference_remise"
             
           Detail:
@@ -230,23 +230,23 @@ table_mapping :
               
               - nom_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "nom"
+                column_name : "nom_donneur"
               
               - nom_benificiaire :
                 table_name : "Beneficiaire"
-                column_name : "nom"
+                column_name : "nom_beneficiaire"
               
               - rib_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "rib"
+                column_name : "rib_donneur"
               
               - rib_beneficiaire :
                 table_name : "Beneficiaire" 
-                column_name : "rib"
+                column_name : "rib_beneficiaire"
               
               - motif_virement :
-                table_name : "Paiement"
-                column_name : "motif"
+                table_name : "Transactions"
+                column_name : "motifç_virement"
               
               - reference_virement :
                 table_name : "Transactions"
@@ -269,7 +269,7 @@ table_mapping :
                   column_name : "num_donneur"
               
               - reference_remise:
-                  table_name : "Paiement"
+                  table_name : "Transactions"
                   column_name : "reference_remise"
             
           Detail:
@@ -312,23 +312,23 @@ table_mapping :
               
               - nom_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "nom"
+                column_name : "nom_donneur"
               
               - nom_benificiaire :
                 table_name : "Beneficiaire"
-                column_name : "nom"
+                column_name : "nom_beneficiaire"
               
               - rib_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "rib"
+                column_name : "rib_donneur"
               
               - rib_beneficiaire :
                 table_name : "Beneficiaire" 
-                column_name : "rib"
+                column_name : "rib_beneficiaire"
               
               - motif_virement :
-                table_name : "Paiement"
-                column_name : "motif"
+                table_name : "Transactions"
+                column_name : "motifç_virement"
               
               - reference_virement :
                 table_name : "Transactions"
@@ -353,7 +353,7 @@ table_mapping :
                   column_name : "num_donneur"
               
               - reference_remise:
-                  table_name : "Paiement"
+                  table_name : "Transactions"
                   column_name : "reference_remise"
             
           Detail:
@@ -396,23 +396,23 @@ table_mapping :
               
               - nom_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "nom"
+                column_name : "nom_donneur"
               
               - nom_benificiaire :
                 table_name : "Beneficiaire"
-                column_name : "nom"
+                column_name : "nom_beneficiaire"
               
               - rib_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "rib"
+                column_name : "rib_donneur"
               
               - rib_beneficiaire :
                 table_name : "Beneficiaire" 
-                column_name : "rib"
+                column_name : "rib_beneficiaire"
               
               - motif_virement :
-                table_name : "Paiement"
-                column_name : "motif"
+                table_name : "Transactions"
+                column_name : "motifç_virement"
               
               - reference_virement :
                 table_name : "Transactions"
@@ -435,7 +435,7 @@ table_mapping :
                   column_name : "num_donneur"
               
               - reference_remise:
-                  table_name : "Paiement"
+                  table_name : "Transactions"
                   column_name : "reference_remise"
             
           Detail:
@@ -478,23 +478,23 @@ table_mapping :
               
               - nom_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "nom"
+                column_name : "nom_donneur"
               
               - nom_benificiaire :
                 table_name : "Beneficiaire"
-                column_name : "nom"
+                column_name : "nom_beneficiaire"
               
               - rib_donneur_ordre :
                 table_name : "Donneur"
-                column_name : "rib"
+                column_name : "rib_donneur"
               
               - rib_beneficiaire :
                 table_name : "Beneficiaire" 
-                column_name : "rib"
+                column_name : "rib_beneficiaire"
               
               - motif_virement :
-                table_name : "Paiement"
-                column_name : "motif"
+                table_name : "Transactions"
+                column_name : "motifç_virement"
               
               - reference_virement :
                 table_name : "Transactions"
