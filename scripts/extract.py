@@ -42,5 +42,3 @@ def extract_from_sql(config, db, schema = None):
     finally:
         cursor.close()
         connection.close()    
-
-print(extract_from_sql("config/db_config.yaml", 'mamda_auto', 'acctra'))

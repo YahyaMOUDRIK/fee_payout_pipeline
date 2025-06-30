@@ -38,10 +38,10 @@ def generate_query(db, schema = None):
     if schema :        
         QUERY = f"""
         SELECT 
-            b.code_banque,
+            b.code_banque as code_banque_receptrice,
             t.date_emission,
             t.num_remise,
-            b.reference,
+            b.reference as ref_ben,
             t.montant,
             t.date_execution,
             d.nom as nom_donneur,
@@ -50,7 +50,9 @@ def generate_query(db, schema = None):
             b.rib as rib_beneficiaire, 
             t.motif_virement,
             t.reference_virement,
-            t.reference_remise
+            b.reference as reference_ben,
+            t.reference_remise,
+            d.num_donneur
         FROM 
             {schema}.Transactions t
         JOIN	
@@ -61,10 +63,10 @@ def generate_query(db, schema = None):
     else :
         QUERY = f"""
         SELECT 
-            b.code_banque,
+            b.code_banque as code_banque_receptrice,
             t.date_emission,
             t.num_remise,
-            b.reference,
+            b.ref as ref_ben,
             t.montant,
             t.date_execution,
             d.nom as nom_donneur,
@@ -73,7 +75,9 @@ def generate_query(db, schema = None):
             b.rib as rib_beneficiaire, 
             t.motif_virement,
             t.reference_virement,
-            t.reference_remise
+            b.reference
+            t.reference_remise,
+            d.num_donneur
         FROM 
             Transactions t
         JOIN	
@@ -124,7 +128,7 @@ def generate_query(db, schema = None):
 def connect_to_dbs(db_config_yaml):
     db_config = read_yaml_file(db_config_yaml)
     dbs = db_config["connections"]["databases"]
-    username = os.getenv('username')
+    username = os.getenv('user_name')
     password = os.getenv('password')
     connections = {}
     for key, value in dbs.items() :
@@ -133,8 +137,8 @@ def connect_to_dbs(db_config_yaml):
                             f'UID={username};'
                             f'PWD={password};'
                             f'SERVER={value['server']};'
-                            f'Database={key};'
-                            f'Trusted_Connection={value['trusted_connection']};')
+                            f'Database={key};')
+                            # f'Trusted_Connection={value['trusted_connection']};')
             print(f"Connection to the database was successful.")
             return connections
         except pyodbc.Error as e:

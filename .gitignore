@@ -2,3 +2,4 @@
 venv
 ~$*
 data/fee_payouts/
+scripts/test_pipeline.py
