@@ -17,42 +17,20 @@ def map_tables(df, table_mapping) :
 
 
 def transform_fields(df, rules):
+    transformation_rules = read_yaml_file(rules)
+    fields = transformation_rules['transformation_rules']
+    columns = df.columns
+    for column in columns : 
+        for field in  fields :
+            if column == field : 
+                if fields[field]['type'] == 'int' :
+                    length = fields[field]['length']
+                    transformation = fields[field]['transformation']
+                    df[column] = df[column].apply(lambda value : eval(transformation, {}, {"value": value, "length": length}))
+                if fields[field]['type'] == 'date' or  fields[field]['type'] == 'time': 
+                    df[column] = pd.to_datetime(df[column])
+                    df[column] = df[column].dt.strftime(fields[field]['form'])
+            else :
+                pass                         
+    return df
 
-    return None
-
-def generate_simt_line(fields, data_row=None):
-
-    line = [' '] * 500
-    
-    for field in fields:
-        for name, props in field.items():
-            pos = props["starting position"]
-            length = props["longueur"]
-            type = props["type"]
-            default = props["default"]
-
-            if data_row is not None and name in data_row and pd.notna(data_row[name]):
-                value = str(data_row[name])
-            else : 
-                if type == 'text':
-                    if default != "":
-                        value = str(default)
-                    else:
-                        value = " " * length
-                elif type == 'integer':
-                    value = str(default)
-                elif type == 'date' or type == 'time':
-                    if default == "today":
-                        value = datetime.today().strftime("%Y%m%d")
-                    elif default == "now":
-                        value = datetime.today().strftime("%H%M%S")
-
-
-            if type == "integer":
-                value = value.zfill(length)
-            else:
-                value = value.ljust(length)[:length]
-
-            line[pos:pos+length] = list(value)
-
-    return ''.join(line).rstrip()

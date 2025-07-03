@@ -70,7 +70,7 @@ integration_file_structure:
           obligatoire: false
           type: text
           longueur: 446
-          default: " "
+          default: ""
 
   Detail:
     Fields: 
@@ -261,7 +261,7 @@ integration_file_structure:
           obligatoire: false
           type: integer
           longueur: 20
-          default: 0
+          default: ""
 
       - zone_reservee_6:
           starting position: 493
