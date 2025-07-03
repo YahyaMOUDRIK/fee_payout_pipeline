@@ -36,9 +36,10 @@ def extract_from_sql(config, db, schema = None):
         data = [dict(zip(columns, row)) for row in rows]
         data = pd.DataFrame(data)
         return data
-    except pyodbc.Error as e:
+    except Exception as e: 
         print(f"Error executing query: {e}")
         return None
     finally:
-        cursor.close()
+        if 'cursor' in locals() :
+            cursor.close()
         connection.close()    
