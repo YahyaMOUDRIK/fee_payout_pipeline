@@ -1,17 +1,3 @@
-# transformation_rules :
-#       Header :
-#         Fields :
-#           - date_production : '%Y%m%d'
-#           - heure_production : '%H%M%S'
-#       Details :
-#         Fields :
-#           - date_emission : '%Y%m%d'
-#           - montant : str(int(value)*100).zfill(length)
-#           - date_execution : '%Y%m%d'
-#       Footer :
-#         Fields :
-#           - nombre_total_virements : value.zfill(length)
-#           - montant_total_virements: str(int(value)*100).zfill(length)
 transformation_rules : 
     date_production : 
        type : date 

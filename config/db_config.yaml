@@ -5,30 +5,36 @@ connections :
     mamda_app :
         server: "PC\\SQLEXPRESS"          
         driver: "ODBC Driver 17 for SQL Server"
-        auth :
-            uid : "${user_name}"
-            pwd : "${password}"     
+        schemas : 
+            - acctra
+            - rd
+        # auth :
+        #     uid : "${user_name}"
+        #     pwd : "${password}"     
 
     mcma_app :
         server: "PC\\SQLEXPRESS"
         driver: "ODBC Driver 17 for SQL Server"
+        schemas : 
+            - acctra
+            - rd
         # trusted_connection: "yes" 
-        auth :
-            uid : "${username}"
-            pwd : "${password}"      
+        # auth :
+        #     uid : "${username}"
+        #     pwd : "${password}"      
 
     mamda_auto :
         server: "PC\\SQLEXPRESS"
         driver: "ODBC Driver 17 for SQL Server"
         # trusted_connection: "yes"
-        auth :
-            uid : "${username}"
-            pwd : "${password}"        
+        # auth :
+        #     uid : "${username}"
+        #     pwd : "${password}"        
 
     mcma_auto :
         server: "PC\\SQLEXPRESS"
         driver: "ODBC Driver 17 for SQL Server"
         # trusted_connection: "yes" 
-        auth :
-            uid : "${username}"
-            pwd : "${password}"     
+        # auth :
+        #     uid : "${username}"
+        #     pwd : "${password}"     
