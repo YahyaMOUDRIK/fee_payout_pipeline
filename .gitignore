@@ -1,5 +1,7 @@
 .env
 venv
 ~$*
-data/fee_payouts/
+# data/fee_payouts/
+# data/fee_payouts_status/
+data/*
 scripts/test_pipeline.py
