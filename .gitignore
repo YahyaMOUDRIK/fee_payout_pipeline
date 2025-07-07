@@ -4,4 +4,6 @@ venv
 # data/fee_payouts/
 # data/fee_payouts_status/
 data/*
+data/fee_payouts_status/
 scripts/test_pipeline.py
+ 
