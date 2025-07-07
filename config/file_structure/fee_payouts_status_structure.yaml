@@ -1,5 +1,5 @@
 #Structure for integration simt files
-integration_file_structure:
+retour_sort_file_structure:
   Header:
     Fields:
       - code_enregistrement : 
