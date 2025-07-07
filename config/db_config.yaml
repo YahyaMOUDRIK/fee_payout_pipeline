@@ -26,6 +26,8 @@ connections :
     mamda_auto :
         server: "PC\\SQLEXPRESS"
         driver: "ODBC Driver 17 for SQL Server"
+        schemas : 
+            - ''
         # trusted_connection: "yes"
         # auth :
         #     uid : "${username}"
@@ -34,6 +36,8 @@ connections :
     mcma_auto :
         server: "PC\\SQLEXPRESS"
         driver: "ODBC Driver 17 for SQL Server"
+        schemas: 
+            - ""
         # trusted_connection: "yes" 
         # auth :
         #     uid : "${username}"

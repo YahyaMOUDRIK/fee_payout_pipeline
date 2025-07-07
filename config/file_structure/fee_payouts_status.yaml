@@ -1,0 +1,301 @@
+#Structure for integration simt files
+integration_file_structure:
+  Header:
+    Fields:
+      - code_enregistrement : 
+          starting position: 0
+          obligatoire: true
+          type: integer
+          longueur: 2
+          default: '10'
+      
+      - par_defaut:
+          starting position: 2
+          obligatoire: true
+          type: text
+          longueur: 18
+          default: '000000000000000000'
+
+      - date_production:
+          starting position: 20
+          obligatoire: false
+          type: date
+          longueur: 8
+          default: today
+
+      - Heure_production:
+          starting position: 28
+          obligatoire: false
+          type: time
+          longueur: 6
+          default: now
+
+      - code_devise: 
+          starting position: 34
+          obligatoire: true
+          type: text
+          longueur: 3
+          default: "MAD"
+
+      - decimal_devise:
+          starting position: 37
+          obligatoire: true
+          type: integer
+          longueur: 1
+          default: 2
+
+      - zone_reservee_1:
+          starting position: 38
+          obligatoire: false
+          type: text
+          longueur: 2
+          default: ""
+
+      - num_donneur_ordre:
+          starting position: 40
+          obligatoire: true
+          type: integer
+          longueur: 7
+          default: 0
+
+      - zone_reservee_2:
+          starting position: 47
+          obligatoire: false
+          type: text
+          longueur: 453
+          default: ""
+
+  Detail:
+    Fields: 
+      - code_enregistrement:
+          starting position: 0
+          obligatoire: true
+          type: integer
+          longueur: 2
+          default: '04'
+      
+      - code_operation:
+          starting position: 2
+          obligatoire: true
+          type: text
+          longueur: 3
+          default: '020'
+
+      - code_banque_emetrice:
+          starting position: 5
+          obligatoire: true
+          type: text
+          longueur: 3
+          default: "007"
+
+      - code_banque_receptrice:
+          starting position: 8
+          obligatoire: false
+          type: text
+          longueur: 3
+          default: ""
+
+      - par_defaut_1:
+          starting position: 11
+          obligatoire: false
+          type: text
+          longueur: 6
+          default: "000000"
+      
+      - date_emission:
+          starting position: 17
+          obligatoire: false
+          type: date
+          longueur: 8
+          default: today
+
+      - code_banque_emetrice_2:
+          starting position: 25
+          obligatoire: false
+          type: text
+          longueur: 3
+          default: "007"
+
+      - num_remise:
+          starting position: 28
+          obligatoire: false
+          type: text
+          longueur: 3
+          default: ""
+        
+      - ref_beneficiaire:
+          starting position: 31
+          obligatoire: false
+          type: text
+          longueur: 12
+          default: ""
+
+      - code_devise:
+          starting position: 43
+          obligatoire: true
+          type: text
+          longueur: 3
+          default: "MAD"
+
+      - decimal_devise:
+          starting position: 46
+          obligatoire: true
+          type: integer
+          longueur: 1
+          default: 2
+
+      - montant:
+          starting position: 47
+          obligatoire: true
+          type: integer
+          longueur: 16
+          default: 0
+
+      - date_traitement:
+          starting position: 63
+          obligatoire: false
+          type: date
+          longueur: 8
+          default: ""
+
+      - date_execution:
+          starting position: 71
+          obligatoire: true
+          type: date
+          longueur: 8
+          default: today
+
+      - sort_operation:
+          starting position: 79
+          obligatoire: false
+          type: text
+          longueur: 3
+          default: ''
+
+      - zone_reservee_1:
+          starting position: 82
+          obligatoire: false
+          type: text
+          longueur: 18
+          default: ""
+
+      - par_defaut:
+          starting position: 100
+          obligatoire: true
+          type: text
+          longueur: 2
+          default: "00"
+        
+      - zone_reservee_2:
+          starting position: 102
+          obligatoire: false
+          type: text
+          longueur: 35
+          default: ""
+
+      - nom_donneur_ordre:
+          starting position: 137
+          obligatoire: true
+          type: text
+          longueur: 35
+          default: ""
+
+      - nom_benificiaire:
+          starting position: 172
+          obligatoire: true
+          type: text
+          longueur: 35
+          default: ""
+
+      - rib_donneur_ordre:
+          starting position: 207
+          obligatoire: true
+          type: text
+          longueur: 24
+          default: ""
+
+      - rib_beneficiaire:
+          starting position: 231
+          obligatoire: true
+          type: text
+          longueur: 24
+          default: ""
+
+      - zone_reservee_3:
+          starting position: 255
+          obligatoire: false
+          type: text
+          longueur: 8
+          default: ""
+
+      - motif_virement:
+          starting position: 263
+          obligatoire: false
+          type: text
+          longueur: 35
+          default: ""
+
+      - reference_virement:
+          starting position: 298
+          obligatoire: false
+          type: text
+          longueur: 12
+          default: ""
+
+      - zone_reservee_4:
+          starting position: 310
+          obligatoire: false
+          type: text
+          longueur: 163
+          default: ""
+
+      - reference_beneficiaire:
+          starting position: 473
+          obligatoire: false
+          type: integer
+          longueur: 20
+          default: ""
+
+      - zone_reservee_5:
+          starting position: 493
+          obligatoire: false
+          type: text
+          longueur: 7
+          default: ""
+
+  Footer:
+    Fields:
+      - code_enregistrement:
+          starting position: 0
+          obligatoire: true
+          type: text
+          longueur: 2
+          default: "11"
+
+      - nb_valeurs:
+          starting position: 2
+          obligatoire: true
+          type: integer
+          longueur: 5
+          default: 0
+      
+      - montant_total:
+          starting position: 7
+          obligatoire: true
+          type: integer
+          longueur: 20
+          default: 0
+
+      - nb_valeurs_payees:
+          starting position: 27
+          obligatoire: true
+          type: integer
+          longueur: 5
+          default: 0
+
+      - zone_reservee:
+          starting position: 32
+          obligatoire: false
+          type: text
+          longueur: 468
+          default: ""

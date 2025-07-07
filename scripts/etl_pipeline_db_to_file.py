@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from scripts.extract import extract_from_sql
 from scripts.transform import *
 from scripts.load import *
+from utils.file_utils import *
 
 if __name__ == "__main__":
     
@@ -13,18 +14,43 @@ if __name__ == "__main__":
     transformation_rules = "config/transformation_rules.yaml"
     structure = "config/file_structure/fee_payouts_structure.yaml"
 
-    df = extract_from_sql(db_config_yaml, 'mamda_auto')
+    databases = read_yaml_file(db_config_yaml)["connections"]["databases"]
 
-    if df is not None and not df.empty:
-        print("Data extracted successfully")
-        new_df = map_tables(df, table_mapping)
-        print("data mapped successfully")
-        final_df = transform_fields(new_df, transformation_rules)
-        print("data transformed successfully")
-        generate_simt_file(structure, final_df, 'asc')
+    for key, value in databases.items() :
+        for schema in value["schemas"] :
+            df = extract_from_sql(db_config_yaml, key, schema)
 
-    else:
-        print("No data extracted or an error occurred.")
+            if df is not None and not df.empty:
+                print(f"Data extracted successfully for {key}")
+                new_df = map_tables(df, table_mapping)
+                print(f"{key} mapped successfully")
+                final_df = transform_fields(new_df, transformation_rules)
+                print(f"{key} transformed successfully")
+                generate_simt_file(structure, final_df, 'asc')
+
+            else:
+                print(f"{key} couldn't be extracted or an error occurred.")
+
+
+
+    # for key, value in databases.items() :
+    #     for schema in value["schemas"] :
+    #         print(schema)
+
+
+
+    # df = extract_from_sql(db_config_yaml, 'mamda_auto', '')
+
+    # if df is not None and not df.empty:
+    #     print("Data extracted successfully")
+    #     new_df = map_tables(df, table_mapping)
+    #     print("data mapped successfully")
+    #     final_df = transform_fields(new_df, transformation_rules)
+    #     print("data transformed successfully")
+    #     generate_simt_file(structure, final_df, 'asc')
+
+    # else:
+    #     print("No data extracted or an error occurred.")
 
 
 # ''' File for the whole ETL pipeline from database to file. '''
