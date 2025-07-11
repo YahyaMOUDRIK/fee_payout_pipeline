@@ -51,17 +51,32 @@ def generate_simt_line(fields, data_row = None) :
 
 
 
-def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None):
+def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None, type_aux=None):
     from datetime import datetime
 
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    date = datetime.now().strftime("%Y%m%d")
+    time = datetime.now().strftime("%H%M%S")
     
     if extension not in ["txt", "docx", "asc"]:
         raise ValueError("Extension must be either 'txt', 'docx' or 'asc")
     
+    type_aux_folders = {
+        'A': 'Avocats',
+        'E': 'Experts Automobiles',
+        'M': 'Medecins',
+        'C': 'Experts Comptables'
+    }
+
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     output_dir = os.path.join(project_root, 'data', 'fee_payouts')
+    
     os.makedirs(output_dir, exist_ok=True) 
+
+    if type_aux and type_aux in type_aux_folders:
+        subfolder = type_aux_folders[type_aux]
+        output_dir = os.path.join(output_dir, subfolder)
+        # Créer le sous-dossier s'il n'existe pas
+        os.makedirs(output_dir, exist_ok=True)
 
     date_emission_dt = pd.to_datetime(df["date_emission"])
     if month is not None and year is not None:
@@ -78,7 +93,7 @@ def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None):
         reference_remise = str(df_filtered['reference_remise'].iloc[0])
     else:
         reference_remise = "NOREF"
-    output_path = os.path.join(output_dir, f'fee_payouts_{reference_remise}_{timestamp}.{extension}')
+    output_path = os.path.join(output_dir, f'{reference_remise}_{date}_{time}.{extension}')
     
     # Check if the YAML file exists and read its structure
     if not os.path.exists(yaml_path):
@@ -94,11 +109,11 @@ def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None):
 
     # Detail
     nb_virements = 0
-    montant_total = 0
+    montant_total_calcule = 0
     for _, row in df_filtered.iterrows():
         lines.append(generate_simt_line(structure["Detail"]["Fields"], data_row=row))
         nb_virements += 1
-        montant_total += float(row["montant"])
+        montant_total_calcule += float(row["montant"])
 
     # Footer
     footer_fields = structure["Footer"]["Fields"]
@@ -106,8 +121,18 @@ def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None):
         if "nombre_total_virements" in field:
             field["nombre_total_virements"]["default"] = nb_virements
         if "montant_total_virements" in field:
-            field["montant_total_virements"]["default"] = montant_total
-
+            #field["montant_total_virements"]["default"] = montant_total_calcule
+            if 'MontantTotal' in df_filtered.columns and not df_filtered.empty :
+                try : 
+                    montant_total = float(str(df_filtered["MontantTotal"].iloc[0]).replace('\xa0', '').replace(' ', '').replace(',', '.'))
+                    print('used montant total from df')
+                except (ValueError,TypeError) :
+                    print("error used calculation instead")
+                    montant_total = montant_total_calcule
+            else :
+                montant_total = montant_total_calcule
+                print("used calculation")
+            field["montant_total_virements"]["default"] =  "{:.4f}".format(montant_total)
     lines.append(generate_simt_line(structure["Footer"]["Fields"]))
 
     # Write to file
