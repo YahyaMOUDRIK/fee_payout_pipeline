@@ -1,3 +1,5 @@
+''' Insère les données du DataFrame dans les tables appropriées selon le mapping.'''
+
 import pandas as pd
 import pyodbc
 import os
@@ -8,16 +10,11 @@ from utils.db_utils import connect_to_dbs
 from utils.file_utils import read_yaml_file
 
 def insert_status_data(df):
-    """
-    Insère les données du DataFrame dans les tables appropriées selon le mapping.
-    """
     try:
-        # Lire le fichier de mapping
-        mapping_file = os.path.join(os.path.dirname(__file__), '..', 'config', 'retour_sort_mapping.yaml')
+        mapping_file = '/config/retour_sort_mapping.yaml'
         mapping = read_yaml_file(mapping_file)
-        
-        # Se connecter à la base de données
-        db_config_file = os.path.join(os.path.dirname(__file__), '..', 'config', 'db_config_.yaml')
+
+        db_config_file = 'config/db_config.yaml'
         connections = connect_to_dbs(db_config_file)
         
         # Pour chaque base de données définie dans le mapping
