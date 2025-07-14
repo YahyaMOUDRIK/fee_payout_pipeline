@@ -252,7 +252,7 @@ retour_sort_file_structure:
       - reference_beneficiaire:
           starting position: 473
           obligatoire: false
-          type: integer
+          type: text
           longueur: 20
           default: ""
 
