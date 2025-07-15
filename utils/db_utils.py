@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def generate_query(db, type_aux):
+def generate_query(type_aux):
     QUERY = f"SELECT * FROM dbo.IMP_Etat_Virement_Aux('{type_aux}')"
     return QUERY
 

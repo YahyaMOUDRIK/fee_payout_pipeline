@@ -1,29 +1,54 @@
 table_mapping :
   Databases :
-    mamda_app :
-          Donneur :
-                nom_donneur_ordre : 'nom'
-                code_banque_emetrice : 'code_banque'
-                rib_donneur_ordre : 'rib'
-                num_donneur_ordre : 'num_donneur'
-          Beneficiaire : 
-              # Columns_mapping : 
+    retour_mcma :
+          DI_Auto_StdAuxiliaires : 
                 nom_benificiaire : 'nom'
                 code_banque_receptrice : 'code_banque'
                 rib_beneficiaire : 'rib'
                 reference_beneficiaire : 'reference'
-                ref_beneficiaire : 'ref'
-          Transactions :
-              # Columns_mapping :
+                # ref_beneficiaire : 'ref'
+          DI_SinAutoRegledt :
                 date_emission : "date_emission"
                 date_execution : "date_execution"     
                 montant : 'montant'
                 rib_donneur_ordre : "rib_donneur"
                 rib_beneficiaire : "rib_beneficiaire"
                 reference_virement : "reference_virement"
-                num_remise : "num_remise"
-                code_operation : "code_operation"
                 motif_virement : "motif_virement"    
+                # num_remise : "num_remise"
+                # code_operation : "code_operation"
+
+
+####################################################################
+# table_mapping :
+#   Databases :
+#     mamda_app :
+#           Donneur :
+#                 nom_donneur_ordre : 'nom'
+#                 code_banque_emetrice : 'code_banque'
+#                 rib_donneur_ordre : 'rib'
+#                 num_donneur_ordre : 'num_donneur'
+#           Beneficiaire : 
+#               # Columns_mapping : 
+#                 nom_benificiaire : 'nom'
+#                 code_banque_receptrice : 'code_banque'
+#                 rib_beneficiaire : 'rib'
+#                 reference_beneficiaire : 'reference'
+#                 ref_beneficiaire : 'ref'
+#           Transactions :
+#               # Columns_mapping :
+#                 date_emission : "date_emission"
+#                 date_execution : "date_execution"     
+#                 montant : 'montant'
+#                 rib_donneur_ordre : "rib_donneur"
+#                 rib_beneficiaire : "rib_beneficiaire"
+#                 reference_virement : "reference_virement"
+#                 num_remise : "num_remise"
+#                 code_operation : "code_operation"
+#                 motif_virement : "motif_virement"    
+
+
+####################################################################
           # AccTra.Donneur :
           #       nom_donneur_ordre : 'nom'
           #       code_banque_emetrice : 'code_banque'
