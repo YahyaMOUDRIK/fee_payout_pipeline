@@ -2,7 +2,6 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.file_utils import read_yaml_file
-from utils.file_utils import read_asc_file
 from scripts.insert_ import insert_status_data
 from scripts.parse import parse_file
 
@@ -18,4 +17,7 @@ if __name__ == "__main__":
     df = parse_file(file_path, structure_path)
     new_dataframes = insert_status_data(df, mapping_path)
     
-    print(new_dataframes)
+    for key, value in new_dataframes.items():
+        print(key)
+        print(value)
+        print('\n')

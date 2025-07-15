@@ -1,6 +1,5 @@
-''' Script for parsing the received file '''
+''' Script for parsing the received file, takes a file path, and a structure path and it rturns a dataframe made of the fields of the file (definefd in the structure) '''
 import pandas as pd
-import yaml
 
 import sys
 import os
@@ -27,7 +26,7 @@ def parse_file(file_path, structure_path):
     df = pd.DataFrame(parsed_lines)
     return df
 
-file_path = "data/fee_payouts_status/sample.asc"
-structure_path = "config/file_structure/fee_payouts_status_structure.yaml"
-df = parse_file(file_path, structure_path)
-print(df)
+# file_path = "data/fee_payouts_status/sample.asc"
+# structure_path = "config/file_structure/fee_payouts_status_structure.yaml"
+# df = parse_file(file_path, structure_path)
+# print(df)
