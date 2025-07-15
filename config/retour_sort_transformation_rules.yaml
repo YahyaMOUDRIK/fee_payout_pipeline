@@ -1,0 +1,12 @@
+transformation_rules : 
+    date_production :
+       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')
+    # heure_production : 
+    #    type : time
+    #    form : '%H%M%S'
+    date_emission :
+       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')
+    montant :
+       transformation : format(float(value)/100, ".2f")
+    date_execution : 
+       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')
