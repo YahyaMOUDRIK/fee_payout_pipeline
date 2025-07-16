@@ -165,3 +165,4 @@ def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None, ty
         doc.save(output_path)
 
     print(f"Fichier généré : {output_path}")
+    return output_path

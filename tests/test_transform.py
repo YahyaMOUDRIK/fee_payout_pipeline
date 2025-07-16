@@ -62,6 +62,7 @@ def test_transform_fields(sample_df, transformation_rules_path):
     df["montant"] = 123.45
     df["date_emission"] = "2024-01-01"
     transformed = transform_fields(df, transformation_rules_path)
-    # assert transformed["montant"].iloc[0] == "000000000012345"
     assert transformed['montant'].iloc[0] == "0000000012345.00"
     assert transformed["date_emission"].iloc[0] == "20240101"
+
+    
