@@ -19,14 +19,25 @@ def parse_line(line, fields):
     return parsed_data
 
 def parse_file(file_path, structure_path):
+    parsed_lines = {
+        'header': None,
+        'details': [],
+        'footer': None
+    }
     lines = read_asc_file(file_path)
     structure = read_yaml_file(structure_path)
-    fields = structure['retour_sort_file_structure']['Detail']['Fields']
-    parsed_lines = [parse_line(line, fields) for line in lines[1:-1]]
-    df = pd.DataFrame(parsed_lines)
-    return df
+    header_fields = structure['retour_sort_file_structure']['Header']['Fields'] 
+    detail_fields = structure['retour_sort_file_structure']['Detail']['Fields']
+    footer_fields = structure['retour_sort_file_structure']['Footer']['Fields']
+    header_parsed_fields = parse_line(lines[0], header_fields)
+    details_parsed_fields = [parse_line(line, detail_fields) for line in lines[1:-1]]
+    footer_parsed_fields = parse_line(lines[-1], footer_fields)
+    #populate parsed_lines
+    parsed_lines['header'] = header_parsed_fields
+    parsed_lines['details'] = details_parsed_fields
+    parsed_lines['footer'] = footer_parsed_fields
+    return parsed_lines
 
-# file_path = "data/fee_payouts_status/sample.asc"
-# structure_path = "config/file_structure/fee_payouts_status_structure.yaml"
-# df = parse_file(file_path, structure_path)
-# print(df)
+parsed_fields = parse_file('data/fee_payouts_status/test.asc', 'config/file_structure/fee_payouts_status_structure.yaml')
+print(parsed_fields)
+

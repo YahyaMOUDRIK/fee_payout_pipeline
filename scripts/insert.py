@@ -7,36 +7,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.file_utils import *
 from utils.db_utils import connect_to_dbs
 
-# def insert_status_data(data, mapping_path):
-#     mapping = read_yaml_file(mapping_path)['table_mapping']
-#     databases = mapping['Databases'].keys()
-#     # tables = mapping['Databases'].values()
-#     # df_AccTra_Donneur = pd.DataFrame()
-#     # df_AccTra_Beneficiaire = pd.DataFrame()
-#     # df_AccTra_Transations = pd.DataFrame()
-#     # df_RD_Donneur = pd.DataFrame()
-#     # df_RD_Beneficiaire = pd.DataFrame()
-#     # df_RD_Transactions = pd.DataFrame()
-#     # dataframes = {
-#     #     'df_Donneur' :  df_AccTra_Donneur,
-#     #     'df_Beneficiaire' : df_AccTra_Beneficiaire,
-#     #     'df_Transactions' : df_AccTra_Transations,
-#     #     # 'df_RD_Donneur' : df_RD_Donneur, 
-#     #     # 'df_RD_Beneficiaire' : df_RD_Beneficiaire,
-#     #     # 'df_RD_Transactions' : df_RD_Transactions
-#     # }
-#     data_columns = data.columns
-#     for db in databases : 
-#         for table, columns in mapping['Databases'][db].items() :
-#             for df_name, df in dataframes.items(): 
-#                 if df_name.split('df_', 1)[1] == table.replace('.', '_') : 
-#                     for key, value in columns.items():
-#                         for data_column in data_columns : 
-#                             if key == data_column :
-#                                 df[value] = data[key]
-#                             else : pass
-    
-#     return dataframes
 
 def insert_status_data(data, db_config, mapping_path):
     try : 
@@ -47,7 +17,6 @@ def insert_status_data(data, db_config, mapping_path):
             print("Failed to establish database connections.")
             return None
         
-        #data_columns = data.columns
         for db, tables in databases.items() : 
             connection = connections[db.lower()]
             if not connection:

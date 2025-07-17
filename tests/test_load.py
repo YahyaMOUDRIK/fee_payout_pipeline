@@ -4,7 +4,6 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import pytest
 import pandas as pd
-import os
 from scripts.load import *
 #import yaml
 from utils.file_utils import *
