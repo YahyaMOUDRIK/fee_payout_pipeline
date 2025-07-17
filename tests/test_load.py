@@ -100,33 +100,33 @@ def test_generate_simt_file(tmp_path, sample_df, yaml_path):
     with open(result_path, "r", encoding="utf-8") as f:
         lines = f.readlines()
 
-    # Verify the number of lines (Header + Detail(s) + Footer)
+
     assert len(lines) == 3  # 1 Header, 1 Detail, 1 Footer
 
-    # Verify the content of the Header
+    # content of the Header
     expected_header = (
         "10"  # code_enregistrement
         + "0000001"  # num_donneur_ordre
-        + "REM123 "  # reference_remise (7 characters, padded with space)
-        + " " * 484  # Remaining spaces to make the line 500 characters
+        + "REM123 "  # reference_remise 
+        + " " * 484 
     )
     assert lines[0] == expected_header + "\n"
 
-    # Verify the content of the Detail
+    # content of the Detail
     expected_detail = (
         "04"  # code_enregistrement
-        + "0000000012345.00"  # montant (16 characters, formatted)
+        + "0000000012345.00"  # montant
         + "VIRJAN24AAA"  # reference_virement
-        + " " * 24  # Padding for reference_virement to 35 characters
-        + " " * 447  # Remaining spaces to make the line 500 characters
+        + " " * 24 
+        + " " * 447
     )
     assert lines[1] == expected_detail + "\n"
 
-    # Verify the content of the Footer
+    # content of the Footer
     expected_footer = (
         "11"  # code_enregistrement
         + "00001"  # nombre_total_virements
         + "000000000012345.0000"  # montant_total_virements
-        + " " * 473  # Remaining spaces to make the line 500 characters
+        + " " * 473
     )
     assert lines[2] == expected_footer + "\n"
