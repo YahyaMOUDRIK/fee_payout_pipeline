@@ -12,15 +12,15 @@ import pandas as pd
 from datetime import datetime
 from utils.file_utils import read_yaml_file
 
-def transform_fields(df, rules):
+def transform_fields(data, rules):
     transformation_rules = read_yaml_file(rules)
     fields = transformation_rules['transformation_rules']
-    columns = df.columns
+    columns = data.keys()
     for column in columns : 
         for field in  fields :
             if column == field :
                 transformation = fields[field]['transformation']
-                df[column] = df[column].apply(lambda value : eval(transformation, {}, {"value": value, "datetime": datetime}))
+                data[column] = data[column].apply(lambda value : eval(transformation, {}, {"value": value, "datetime": datetime}))
             else :
                 pass                         
-    return df
+    return data

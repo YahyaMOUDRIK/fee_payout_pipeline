@@ -2,13 +2,21 @@ table_mapping :
   Databases :
       SinAuto_MCMA_retour : 
             SinAutoReg_retour : 
-                DateEmission : "date_emission"
-                DateTraitement : "date_execution" 
-                DateExecution : "date_execution"    
-                Montant : 'montant'
-                RibBeneficiaire : "rib_beneficiaire"
-                reference_virement : "reference_virement"
-                motif_virement : "motif_virement"
+                date_emission : 'DateEmission'
+                date_traitement: 'DateTraitement'
+                date_execution: 'DateExecution'
+                montant : 'Montant'
+                rib_beneficiaire : 'RibBeneficiaire'
+                motif_virement : 'MotifVirement'
+                nom_benificiaire : 'Beneficiaire'
+
+            #     DateEmission : "date_emission"
+            #     DateTraitement : "date_execution" 
+            #     DateExecution : "date_execution"    
+            #     Montant : 'montant'
+            #     RibBeneficiaire : "rib_beneficiaire"
+            # #     reference_virement : "reference_virement"
+            #     motif_virement : "motif_virement"
 
 #     retour_mcma :
 #           DI_Auto_StdAuxiliaires : 

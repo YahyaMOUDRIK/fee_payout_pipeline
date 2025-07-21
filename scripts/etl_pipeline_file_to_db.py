@@ -17,10 +17,10 @@ if __name__ == "__main__":
 
     mapping = read_yaml_file(mapping_path)
 
-    file_path = "data/fee_payouts_status/test.asc"
+    file_path = "data/fee_payouts_status/sample.asc"
     structure_path = "config/file_structure/fee_payouts_status_structure.yaml"
     rules = "config/retour_sort_transformation_rules.yaml"
 
-    df = parse_file(file_path, structure_path)
-    transformed_df = transform_fields(df, rules)
+    data = parse_file(file_path, structure_path)
+    transformed_df = transform_fields(data, rules)
     insert_status_data(transformed_df, db_config, mapping_path)

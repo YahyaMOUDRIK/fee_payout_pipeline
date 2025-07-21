@@ -38,6 +38,6 @@ def parse_file(file_path, structure_path):
     parsed_lines['footer'] = footer_parsed_fields
     return parsed_lines
 
-parsed_fields = parse_file('data/fee_payouts_status/test.asc', 'config/file_structure/fee_payouts_status_structure.yaml')
-print(parsed_fields)
+# parsed_fields = parse_file('data/fee_payouts_status/test.asc', 'config/file_structure/fee_payouts_status_structure.yaml')
+# print(parsed_fields['details'])
 
