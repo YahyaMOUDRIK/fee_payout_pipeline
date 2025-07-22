@@ -12,7 +12,7 @@ def extract_from_sql(config, db, type_aux, schema = None):
         connections = connect_to_dbs(config)
         connection = connections[db.lower()]
         cursor = connection.cursor()
-        query = generate_query(db, type_aux)
+        query = generate_query(type_aux)
         cursor.execute(query)
         columns = [column[0] for column in cursor.description]
         rows = cursor.fetchall()

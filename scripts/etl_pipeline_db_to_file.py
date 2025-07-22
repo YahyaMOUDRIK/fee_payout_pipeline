@@ -15,23 +15,24 @@ if __name__ == "__main__":
     structure = "config/file_structure/fee_payouts_structure.yaml"
 
     databases = read_yaml_file(db_config_yaml)["connections"]["databases"]
-
+    dbs = ["sinauto_mcma_"]
     type_aux = ['A', 'E', 'M', 'C']
     for key, value in databases.items() :
-        for type_aux_curr in type_aux : 
-            print(type_aux_curr)
-            df = extract_from_sql(db_config_yaml, key, type_aux_curr)
+        if key.lower() in dbs :
+            for type_aux_curr in type_aux : 
+                print(type_aux_curr)
+                df = extract_from_sql(db_config_yaml, key, type_aux_curr)
 
-            if df is not None and not df.empty:
-                print(f"Data extracted successfully for {key}")
-                new_df = map_tables(df, table_mapping)
-                print(f"{key} mapped successfully")
-                final_df = transform_fields(new_df, transformation_rules)
-                print(f"{key} transformed successfully")
-                generate_simt_file(structure, final_df, 'asc', type_aux=type_aux_curr)
+                if df is not None and not df.empty:
+                    print(f"Data extracted successfully for {key}")
+                    new_df = map_tables(df, table_mapping)
+                    print(f"{key} mapped successfully")
+                    final_df = transform_fields(new_df, transformation_rules)
+                    print(f"{key} transformed successfully")
+                    generate_simt_file(structure, final_df, 'asc', type_aux=type_aux_curr)
 
-            else:
-                print(f"{key} couldn't be extracted or an error occurred.")
+                else:
+                    print(f"{key} couldn't be extracted or an error occurred.")
 
 
 
