@@ -9,6 +9,15 @@ table_mapping :
                 rib_beneficiaire : 'RibBeneficiaire'
                 motif_virement : 'MotifVirement'
                 nom_benificiaire : 'Beneficiaire'
+      SinAT_MCMA_retour : 
+            SinATReg_retour : 
+                date_emission : 'DateEmission'
+                date_traitement: 'DateTraitement'
+                date_execution: 'DateExecution'
+                montant : 'Montant'
+                rib_beneficiaire : 'RibBeneficiaire'
+                motif_virement : 'MotifVirement'
+                nom_benificiaire : 'Beneficiaire'
 
             #     DateEmission : "date_emission"
             #     DateTraitement : "date_execution" 

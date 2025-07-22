@@ -5,6 +5,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.file_utils import *
 from utils.db_utils import connect_to_dbs
+from scripts.parse import *
 
 
 
@@ -27,7 +28,7 @@ def insert_status_data(parsed_data, db_config_path, mapping_path):
         elif parsed_header['num_donneur_ordre'] == '0679812' :
             donneur_ordre = 'MCMA'
         else : 
-            donneur_ordre = ""  #le scénario ou le donneur d'ordre n'est ni mamda ni mcma n'est pas pris en compte
+            donneur_ordre = None  #le scénario ou le donneur d'ordre n'est ni mamda ni mcma n'est pas pris en compte
         
         
         parsed_detail = parsed_data['details']
@@ -42,12 +43,24 @@ def insert_status_data(parsed_data, db_config_path, mapping_path):
             
         
         # Connect to proper db
+        # for db in databases.keys(): 
+        #     if (type_sinistre.lower() in db.lower() and donneur_ordre.lower() in db.lower()): 
+        #         database = db
+        #         print(f"db chosen is {db}")
+        #         break
+        #     else :
+        #         raise Exception(f"Database doesn't exist")
+        database = None
         for db in databases.keys(): 
-            if (type_sinistre.lower() in db.lower() and donneur_ordre.lower() in db.lower()): 
-                database = db
-                break
-            else :
-                raise Exception(f"Database doesn't exist")
+            try : 
+                if (type_sinistre.lower() in db.lower() and donneur_ordre.lower() in db.lower()): 
+                    database = db
+                    print(f"db chosen is {database}")
+            except Exception as e: 
+                # print(e)
+                continue
+        if not database : 
+            raise Exception(f"Database doesn't exist for type_sinistre={type_sinistre} and donneur_ordre={donneur_ordre}")
 
         connection = connections[database]
         if not connection :
@@ -94,4 +107,48 @@ def insert_status_data(parsed_data, db_config_path, mapping_path):
         return None    
 
 
+# mapping = read_yaml_file('config/retour_sort_mapping.yaml')['table_mapping']
+# databases = mapping['Databases']
+# parsed_data = parse_file("data/fee_payouts_status\AT_0725.asc", 'config/file_structure/fee_payouts_status_structure.yaml')
 
+# # reference_virement = parsed_data['header']['num_donneur_ordre']
+
+# # specifier le donneur ordre
+# parsed_header = parsed_data['header']
+# if parsed_header['num_donneur_ordre'] == '0679814' :
+#     donneur_ordre = 'MAMDA'
+# elif parsed_header['num_donneur_ordre'] == '0679812' :
+#     donneur_ordre = 'MCMA'
+# else : 
+#     donneur_ordre = ""  
+
+
+# parsed_detail = parsed_data['details']
+# # specifier le type de sinistre
+# reference_virement = parsed_data['details'][0]['reference_virement']
+# if reference_virement.split('-')[0][1:3] == '01': 
+#     type_sinistre = 'AT' #will be changed with the real value once i get acces to real db 
+# elif reference_virement.split('-')[0][1:3] == '02':
+#     type_sinistre = 'Auto'
+# else : 
+#     type_sinistre = 'RD'
+
+# for db in databases.keys(): 
+#     try : 
+#         if (type_sinistre.lower() in db.lower() and donneur_ordre.lower() in db.lower()): 
+#             database = db
+#             print(f"db chosen is {database}")
+#     except Exception as e: 
+#         # print(e)
+#         continue
+# if not database : 
+#     raise Exception(f"Database doesn't exist for type_sinistre={type_sinistre} and donneur_ordre={donneur_ordre}")
+#     # if (type_sinistre.lower() in db.lower() and donneur_ordre.lower() in db.lower()): 
+#     #     database = db
+#     #     print(f"db chosen is {db}")
+#     #     break
+#     # else :
+#     #     raise Exception(f"Database doesn't exist")
+
+# # print(donneur_ordre)
+# # print(type_sinistre)

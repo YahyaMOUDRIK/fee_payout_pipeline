@@ -6,6 +6,9 @@ connections :
     SinAuto_MCMA_retour :
         server: "PC\\SQLEXPRESS"          
         driver: "ODBC Driver 17 for SQL Server"
+    SinAT_MCMA_retour :
+        server: "PC\\SQLEXPRESS"          
+        driver: "ODBC Driver 17 for SQL Server"
     
 
     
