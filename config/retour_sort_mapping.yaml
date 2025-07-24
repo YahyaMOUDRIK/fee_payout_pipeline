@@ -1,6 +1,11 @@
 table_mapping :
   Databases :
       SinAuto_MCMA_retour : 
+            Sort_MetaData_Auto_MCMA :
+                date_production : 'DateProduction'
+                montant_total : 'MontantTotal'
+                nb_valeurs : 'NbrValeurs'
+                nb_valeurs_payees : 'NbrValeursPaye'
             SinAutoReg_retour : 
                 date_emission : 'DateEmission'
                 date_traitement: 'DateTraitement'
@@ -9,7 +14,12 @@ table_mapping :
                 rib_beneficiaire : 'RibBeneficiaire'
                 motif_virement : 'MotifVirement'
                 nom_benificiaire : 'Beneficiaire'
-      SinAT_MCMA_retour : 
+      SinAT_MCMA_retour :
+            Sort_MetaData_AT_MCMA :
+                date_production : 'DateProduction'
+                montant_total : 'MontantTotal'
+                nb_valeurs : 'NbrValeurs'
+                nb_valeurs_payees : 'NbrValeursPaye'
             SinATReg_retour : 
                 date_emission : 'DateEmission'
                 date_traitement: 'DateTraitement'
@@ -18,6 +28,11 @@ table_mapping :
                 rib_beneficiaire : 'RibBeneficiaire'
                 motif_virement : 'MotifVirement'
                 nom_benificiaire : 'Beneficiaire'
+            # Sort_MetaData_Auto_MCMA :
+            #     date_production : 'DateProduction'
+            #     montant_total : 'MontantTotal'
+            #     nb_valeurs : 'NbrValeurs'
+            #     nb_valeurs_payees : 'NbrValeursPaye'               
 
             #     DateEmission : "date_emission"
             #     DateTraitement : "date_execution" 

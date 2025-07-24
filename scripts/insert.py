@@ -41,7 +41,7 @@ def insert_status_data(parsed_data, db_config_path, mapping_path):
         else : 
             type_sinistre = 'RD' #only cases we will cover if other cases, i can add them later 
             
-        
+        parsed_footer = parsed_data['footer']
         # Connect to proper db
         # for db in databases.keys(): 
         #     if (type_sinistre.lower() in db.lower() and donneur_ordre.lower() in db.lower()): 
@@ -66,45 +66,168 @@ def insert_status_data(parsed_data, db_config_path, mapping_path):
         if not connection :
             raise Exception(f"Connection to {database} failed")
         cursor = connection.cursor()
+        
 
         has_errors = False
-        for table, columns in databases[database].items():
-            for detail in parsed_detail :  
-                # Start inserting in proper tables :
-                column_names = []
-                values = []                  
-                for key, value in detail.items():
+        file_id = None
+
+        for table, columns in databases[database].items() :
+            if 'metadata' in table.lower() : 
+
+                # Check if the file has already been processed
+                name_file = os.path.basename(parsed_data['file_path'])
+                cursor.execute(f"SELECT COUNT(*) FROM {table} WHERE NameFile = ?", (name_file,))
+                if cursor.fetchone()[0] > 0:
+                    print(f"File {name_file} has already been processed. Skipping.")
+                    return 
+                
+                metadata_columns = []
+                metadata_values  = []
+                for key, value in parsed_header.items() : 
                     if key in columns.keys():
-                        column_names.append(columns[key])
-                        values.append(value)
-                    
-                #Fill the missing columns that don't exist in data
-                IdReglement = detail['reference_virement'].split('-')[1]
-                if 'IdReglement' not in column_names:  # Avoid duplicate columns
-                    column_names.append('IdReglement')
-                    values.append(IdReglement)
-                # RefReglement = reference_virement.split('-')[0][1] +                     
-                if column_names and values:
-                    placeholders = ", ".join(["?"] * len(values))
-                    query = f"INSERT INTO {table} ({', '.join(column_names)}) VALUES ({placeholders})"
-                    try:
-                        cursor.execute(query, values)
-                    except Exception as e:
-                        print(f"Error executing query for table {table}: {e}")
-                        has_errors = True
-                        continue
-            connection.commit()
+                        metadata_columns.append(columns[key])
+                        metadata_values.append(value)
+                for key, value in parsed_footer.items() :
+                    if key in columns.keys():
+                        metadata_columns.append(columns[key])
+                        metadata_values.append(value)
+                name_file = os.path.basename(parsed_data['file_path'])
+                metadata_columns.append('NameFile')
+                metadata_values.append(name_file)
+
+                # Construire et exécuter la requête d'insertion
+                placeholders = ", ".join(["?"] * len(metadata_values))
+                query = f"INSERT INTO {table} ({', '.join(metadata_columns)}) VALUES ({placeholders})"
+                try:
+                    cursor.execute(query, metadata_values)
+                    connection.commit()
+
+                    # Récupérer l'ID généré automatiquement
+                    cursor.execute(f"SELECT IdFile FROM {table} WHERE NameFile = ?", 
+                                (name_file))
+                    file_id = cursor.fetchone()[0]
+                    print(f"Metadata inserted successfully into {table} with ID: {file_id}")
+                except Exception as e:
+                    print(f"Error inserting metadata into {table}: {e}")
+                    has_errors = True
+                    file_id = None
+
+            else : 
+
+                if file_id is None:
+                    print("Error: Metadata insertion failed, cannot proceed with detail insertion.")
+                    has_errors = True
+                    break
+
+                for detail in parsed_detail :  
+                    # Start inserting in proper tables :
+                    column_names = []
+                    values = []                  
+                    for key, value in detail.items():
+                        if key in columns.keys():
+                            column_names.append(columns[key])
+                            values.append(value)
+                        
+                    #Fill the missing columns that don't exist in data
+                    IdReglement = detail['reference_virement'].split('-')[1]
+                    if 'IdReglement' not in column_names:  # Avoid duplicate columns
+                        column_names.append('IdReglement')
+                        values.append(IdReglement)
+
+                    if 'IdFile' not in column_names:  # Assuming the column name in the table is IdFile
+                        column_names.append('IdFile')
+                        values.append(file_id)
+
+                    # RefReglement = reference_virement.split('-')[0][1] +                     
+                    if column_names and values:
+                        placeholders = ", ".join(["?"] * len(values))
+                        query = f"INSERT INTO {table} ({', '.join(column_names)}) VALUES ({placeholders})"
+                        try:
+                            cursor.execute(query, values)
+                        except Exception as e:
+                            print(f"Error executing query for table {table}: {e}")
+                            has_errors = True
+                            continue
+                connection.commit()
             
             if not has_errors:
-                print("Data inserted successfully")                     
+                print("Data inserted successfully")    
 
-            connection.close() 
-            return None   
     except Exception as e : 
         print(f"Error: {e}")
         if 'connection' in locals() and connection:
             connection.close()
         return None    
+        
+        # for table, columns in databases[database].items():
+        #     if table not in ["Sort_MetaData_Auto_MCMA"] :
+        #         # Parsing details
+        #         for detail in parsed_detail :  
+        #             # Start inserting in proper tables :
+        #             column_names = []
+        #             values = []                  
+        #             for key, value in detail.items():
+        #                 if key in columns.keys():
+        #                     column_names.append(columns[key])
+        #                     values.append(value)
+                        
+        #             #Fill the missing columns that don't exist in data
+        #             IdReglement = detail['reference_virement'].split('-')[1]
+        #             if 'IdReglement' not in column_names:  # Avoid duplicate columns
+        #                 column_names.append('IdReglement')
+        #                 values.append(IdReglement)
+        #             # RefReglement = reference_virement.split('-')[0][1] +                     
+        #             if column_names and values:
+        #                 placeholders = ", ".join(["?"] * len(values))
+        #                 query = f"INSERT INTO {table} ({', '.join(column_names)}) VALUES ({placeholders})"
+        #                 try:
+        #                     cursor.execute(query, values)
+        #                 except Exception as e:
+        #                     print(f"Error executing query for table {table}: {e}")
+        #                     has_errors = True
+        #                     continue
+        #         connection.commit()
+            
+    #         # if not has_errors:
+    #         #     print("Data inserted successfully")                     
+    #     # Insert metadata into Sort_MetaData_Auto_MCMA
+    #     metadata_table = ["Sort_MetaData_Auto_MCMA"]
+    #     for table in metadata_table : 
+    #         metadata_columns = databases[database].get(table, {})
+    #         if metadata_columns:
+    #             metadata_values = {
+    #                 metadata_columns.get('NameFile', 'NameFile'): os.path.basename(parsed_data['file_path']),
+    #                 metadata_columns.get('DateProduction', 'DateProduction'): parsed_header.get('date_production', ''),
+    #                 metadata_columns.get('MontantTotal', 'MontantTotal'): parsed_footer.get('montant_total', 0),
+    #                 metadata_columns.get('NbrValeurs', 'NbrValeurs'): parsed_footer.get('nb_valeurs', 0),
+    #                 metadata_columns.get('NbrValeursPaye', 'NbrValeursPaye'): parsed_footer.get('nb_valeurs_payees', 0),
+    #             }
+
+    #             column_names = list(metadata_values.keys())
+    #             values = list(metadata_values.values())
+    #             placeholders = ", ".join(["?"] * len(values))
+    #             query = f"INSERT INTO {table} ({', '.join(column_names)}) VALUES ({placeholders})"
+    #             try:
+    #                 cursor.execute(query, values)
+    #                 connection.commit()
+    #                 print(f"Metadata inserted successfully into {metadata_table}")
+    #             except Exception as e:
+    #                 print(f"Error inserting metadata into {metadata_table}: {e}")
+    #                 has_errors = True
+
+    #         if not has_errors:
+    #             print("Data inserted successfully")
+    #             connection.close() 
+    #             return None   
+    # except Exception as e : 
+    #     print(f"Error: {e}")
+    #     if 'connection' in locals() and connection:
+    #         connection.close()
+    #     return None    
+
+
+
+
 
 
 # mapping = read_yaml_file('config/retour_sort_mapping.yaml')['table_mapping']
@@ -152,3 +275,10 @@ def insert_status_data(parsed_data, db_config_path, mapping_path):
 
 # # print(donneur_ordre)
 # # print(type_sinistre)
+
+
+# mapping = read_yaml_file("config/retour_sort_mapping.yaml")['table_mapping']
+# databases = mapping['Databases']
+
+# for table, columns in databases["SinAuto_MCMA_retour"].items() :
+#     print(table)

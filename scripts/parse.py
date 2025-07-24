@@ -20,6 +20,7 @@ def parse_line(line, fields):
 
 def parse_file(file_path, structure_path):
     parsed_lines = {
+        'file_path' : file_path,
         'header': None,
         'details': [],
         'footer': None
@@ -39,5 +40,5 @@ def parse_file(file_path, structure_path):
     return parsed_lines
 
 # parsed_fields = parse_file('data/fee_payouts_status/test.asc', 'config/file_structure/fee_payouts_status_structure.yaml')
-# print(parsed_fields['details'])
-
+# path_name = os.path.basename(parsed_fields['file_path'])
+# print(path_name)
