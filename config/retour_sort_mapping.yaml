@@ -13,7 +13,7 @@ table_mapping :
                 montant : 'Montant'
                 rib_beneficiaire : 'RibBeneficiaire'
                 motif_virement : 'MotifVirement'
-                nom_benificiaire : 'Beneficiaire'
+                nom_beneficiaire : 'Beneficiaire'
       SinAT_MCMA_retour :
             Sort_MetaData_AT_MCMA :
                 date_production : 'DateProduction'
@@ -27,7 +27,7 @@ table_mapping :
                 montant : 'Montant'
                 rib_beneficiaire : 'RibBeneficiaire'
                 motif_virement : 'MotifVirement'
-                nom_benificiaire : 'Beneficiaire'
+                nom_beneficiaire : 'Beneficiaire'
             # Sort_MetaData_Auto_MCMA :
             #     date_production : 'DateProduction'
             #     montant_total : 'MontantTotal'

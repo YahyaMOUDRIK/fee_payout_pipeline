@@ -5,7 +5,7 @@ import datetime
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.file_utils import read_yaml_file
 from scripts.insert import insert_status_data
-from scripts.parse import parse_file
+from scripts.parse_ import parse_file
 from scripts.transform_fields import transform_fields
 
 import pandas as pd

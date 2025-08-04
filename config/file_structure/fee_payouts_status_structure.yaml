@@ -200,7 +200,7 @@ retour_sort_file_structure:
           longueur: 35
           default: ""
 
-      - nom_benificiaire:
+      - nom_beneficiaire:
           starting position: 172
           obligatoire: true
           type: text

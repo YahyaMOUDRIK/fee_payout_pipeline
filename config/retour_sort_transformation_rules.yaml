@@ -7,8 +7,10 @@ transformation_rules :
     date_emission :
        transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')
     montant :
-       transformation : format(float(value)/100, ".2f")
+       transformation : str(format(float(value)/100, (".2f")))
     date_execution : 
        transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')
     date_traitement :
-       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')      
+       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')   
+    montant_total: 
+       transformation : str(format(float(value)/100, (".2f")))

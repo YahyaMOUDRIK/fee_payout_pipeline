@@ -1,13 +1,13 @@
 connections :
   databases :
     sinauto_mcma_ :
-        server: "PC\\SQLEXPRESS"          
+        server: "YAHYA\\SQLEXPRESS"          
         driver: "ODBC Driver 17 for SQL Server"
     SinAuto_MCMA_retour :
-        server: "PC\\SQLEXPRESS"          
+        server: "YAHYA\\SQLEXPRESS"          
         driver: "ODBC Driver 17 for SQL Server"
     SinAT_MCMA_retour :
-        server: "PC\\SQLEXPRESS"          
+        server: "YAHYA\\SQLEXPRESS"          
         driver: "ODBC Driver 17 for SQL Server"
     
 

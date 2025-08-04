@@ -6,8 +6,10 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from utils.file_utils import *
+import re
+from datetime import datetime
 
- 
+
 def parse_line(line, fields):
     parsed_data = {}
     for field in fields:
@@ -38,7 +40,3 @@ def parse_file(file_path, structure_path):
     parsed_lines['details'] = details_parsed_fields
     parsed_lines['footer'] = footer_parsed_fields
     return parsed_lines
-
-# parsed_fields = parse_file('data/fee_payouts_status/test.asc', 'config/file_structure/fee_payouts_status_structure.yaml')
-# path_name = os.path.basename(parsed_fields['file_path'])
-# print(path_name)
