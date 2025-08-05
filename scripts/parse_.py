@@ -21,9 +21,13 @@ def validate_line(line, line_type):
             errors.append('code_enregistrement_header')
         #18 zéros
         zero_fields = re.search(r"10(0+)", line)
-        if zero_fields.group(1) != '0'*18:
-            is_valid = False
+        if not zero_fields :
+            is_valid = False 
             errors.append('18 zeros header')
+        else : 
+            if zero_fields.group(1) != '0'*18:
+                is_valid = False
+                errors.append('18 zeros header')
         #DateTime 
         date_heure_prod = re.search(r'20.*?(?=MAD)', line)
         try:
@@ -37,23 +41,28 @@ def validate_line(line, line_type):
         #code enregistrement detail
         if not line.startswith('04'):
             errors.append("La ligne doit commencer par le code '04'.")
+            is_valid = False
 
         #nom donneur ordre
         if not re.search(r'\b(mcma|mamda)\b', line, re.IGNORECASE):
             errors.append("Le nom du donneur d'ordre ('mcma' ou 'mamda') est manquant.")
+            is_valid = False
 
         #00
         if not re.search(r'\b00\b', line):
             errors.append("Le champ obligatoire '00' est manquant.")
+            is_valid = False
 
         #MAD2
         if not re.search(r'MAD2\d{8,16}\.\d{1,2}', line):
             errors.append("Le format 'MAD2' suivi du montant est incorrect ou manquant.")
+            is_valid = False
 
         #RIB ben et Rib donn ord
         rib_block_match = re.search(r'\b(\d{48})\b', line)
         if not rib_block_match:
             errors.append("Le bloc de 48 chiffres contenant les deux RIBs est manquant.")
+            is_valid = False
         else:
             #rib donn ordre commence avec 007
             rib_combined = rib_block_match.group(1)
@@ -61,14 +70,17 @@ def validate_line(line, line_type):
             second_rib = rib_combined[24:48]
             if not (first_rib.startswith('007') or second_rib.startswith('007')):
                 errors.append("Aucun des deux RIBs ne commence par '007' (RIB donneur d'ordre invalide).")
+                is_valid = False
 
         #nom benef
         if not re.search(r'mcma\s+[A-Z][A-Z\s\.&]{4,34}\s+\d{48}', line, re.IGNORECASE):
             errors.append("Le nom du bénéficiaire est manquant ou mal formaté.")
+            is_valid = False
 
         #référence de virement au format 'XXX-XXXXXX'
         if not re.search(r'\b\d{3}-\d{6}\b', line):
             errors.append("La référence de virement (format XXX-XXXXXX) est manquante.")
+            is_valid = False
             
         #date_emission : 
         date_emission = re.search(r"0{6}(\d{8})", line)
@@ -112,6 +124,7 @@ def validate_line(line, line_type):
     if line_type == 'footer' :
         if not line.startswith('11'):
             errors.append("error code enr footer")
+            is_valid = False
     return is_valid, errors
 
     
@@ -120,8 +133,12 @@ def extract_fields(line, line_type) :
     detail_fields = {}
     footer_fields = {}
     if line_type == 'header': 
-        date_production = re.search(r'20.*?(?=MAD)', line)
-        header_fields['date_production'] = date_production.group(0)
+        date_production = re.search(r'(20\d{6})(\d{6})?(?=MAD)', line)
+        num_donneur_ordre = re.search(r'MAD\d*\s*(\d{7})', line)
+        if date_production : 
+            header_fields['date_production'] = date_production.group(1)
+        if num_donneur_ordre :
+            header_fields['num_donneur_ordre'] = num_donneur_ordre.group(1)
         return header_fields
     elif line_type == 'detail' : 
         reference_virement = re.search(r'\b\d{3}-\d{6}\b', line)
@@ -132,14 +149,47 @@ def extract_fields(line, line_type) :
         rib_beneficiaire = re.search(r'\b(\d{48})\b', line).group(1)[24:48]
         motif_virement = re.search(r"\d{20,}\s+([A-Za-zÉéèàêâîïçûôë' -]+?)\s+\d{3}-\d{6}", line)
         nom_beneficiaire = re.search(r"(mcma|mamda)\s+([A-ZÉÈÀÂÎÏ'\- ]+?)\s+\d{20,}", line, re.IGNORECASE)
-        detail_fields['date_emission'] = date_emission.group(1)
-        detail_fields['date_traitement'] = date_traitement.group(1)
-        detail_fields['date_execution'] = date_execution.group(1)
-        detail_fields['montant'] = montant.group(1)
-        detail_fields['rib_beneficiaire'] = rib_beneficiaire
-        detail_fields['motif_virement'] = motif_virement.group(1).strip()
-        detail_fields['nom_beneficiaire'] = nom_beneficiaire.group(2).strip()
-        detail_fields['reference_virement'] = reference_virement.group(0)
+        
+        if date_emission : 
+            detail_fields['date_emission'] = date_emission.group(1)
+        else :
+            detail_fields['date_emission'] = ""
+
+        if date_traitement : 
+            detail_fields['date_traitement'] = date_traitement.group(1)
+        else :
+            detail_fields['date_traitement'] = ""
+
+        if date_execution : 
+            detail_fields['date_execution'] = date_execution.group(1)
+        else : 
+            detail_fields['date_execution'] = ""
+
+        if montant : 
+            detail_fields['montant'] = montant.group(1)
+        else : 
+            detail_fields['montant'] = ""
+
+        if rib_beneficiaire : 
+            detail_fields['rib_beneficiaire'] = rib_beneficiaire
+        else : 
+            detail_fields['rib_beneficiaire'] = ""
+        
+        if motif_virement :
+            detail_fields['motif_virement'] = motif_virement.group(1).strip()
+        else : 
+            detail_fields['motif_virement'] = ""
+
+        if nom_beneficiaire :    
+            detail_fields['nom_beneficiaire'] = nom_beneficiaire.group(2).strip()
+        else : 
+            detail_fields['nom_beneficiaire'] = ""
+
+        if reference_virement :
+            detail_fields['reference_virement'] = reference_virement.group(0)
+        else :
+            detail_fields['reference_virement'] = ""
+                    
         return detail_fields
     elif line_type == 'footer':
         nb_valeurs = re.search(r"11(\d{5})", line).group(1)

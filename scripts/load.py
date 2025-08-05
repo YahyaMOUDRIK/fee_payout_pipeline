@@ -1,6 +1,7 @@
 ''' File for writing the SIMT file from the extracted data. '''
 import sys
 import os
+from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from utils.file_utils import read_yaml_file
@@ -52,7 +53,8 @@ def generate_simt_line(fields, data_row = None) :
 
 
 def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None, type_aux=None):
-    from datetime import datetime
+    # from datetime import datetime
+    load_dotenv()
 
     date = datetime.now().strftime("%Y%m%d")
     time = datetime.now().strftime("%H%M%S")
@@ -68,7 +70,15 @@ def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None, ty
     }
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    output_dir = os.path.join(project_root, 'data', 'fee_payouts')
+    # output_dir = os.path.join(project_root, 'data', 'fee_payouts')
+    output_dir = os.getenv('DATA_DIR_FEE_PAYOUTS')
+    if not output_dir or not os.path.exists(output_dir) or not os.access(output_dir, os.W_OK):
+        print("AVERTISSEMENT: Dossier externe non accessible ou non défini dans .env")
+        print("Arrêt du traitement.")
+        sys.exit(1)
+    else:
+        print(f"Utilisation du dossier externe")
+
     
     os.makedirs(output_dir, exist_ok=True) 
 
@@ -164,5 +174,5 @@ def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None, ty
 
         doc.save(output_path)
 
-    print(f"Fichier généré : {output_path}")
+    print(f"Fichier généré")
     return output_path

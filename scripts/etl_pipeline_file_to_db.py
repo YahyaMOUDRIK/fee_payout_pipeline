@@ -2,6 +2,7 @@ import sys
 import os
 import glob
 import datetime
+from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from utils.file_utils import read_yaml_file
 from scripts.insert import insert_status_data
@@ -24,6 +25,8 @@ def process_file(file_path, structure_path, rules, db_config, mapping_path):
         return None
 
 if __name__ == "__main__":
+    load_dotenv()
+
     db_config = "config/db_config.yaml"
     mapping_path = "config/retour_sort_mapping.yaml"
     db_config_path = "config/db_config.yaml"
@@ -34,9 +37,30 @@ if __name__ == "__main__":
     date_pattern = current_date.strftime("%m%y")
     
     print(f"Looking for newest files")
+
+    # Chemin vers le dossier externe avec restriction d'accès
+    external_directory = os.getenv('DATA_DIR_FEE_STATUS')
+
+    # Vérifier si le dossier externe existe et est accessible
+    if external_directory and os.path.exists(external_directory) and os.access(external_directory, os.R_OK):
+        print(f"Utilisation du dossier externe")
+        directory_path = external_directory
+    else:
+        print(f"Dossier externe non accessible ou non défini, arrêt du traitement")
+        sys.exit(1)
+    # else:
+    #     # Fallback vers le dossier de données du projet
+    #     print(f"Dossier externe non accessible, utilisation du dossier local")
+    #     directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'fee_payouts_status'))
     
-    directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'fee_payouts_status'))
+    print(f"Recherche dans: {directory_path}")
     all_files = glob.glob(os.path.join(directory_path, "*"))
+    
+    target_files = [f for f in all_files if date_pattern in os.path.basename(f)]
+ 
+    
+    # directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'fee_payouts_status'))
+    # all_files = glob.glob(os.path.join(directory_path, "*"))
     
     target_files = [f for f in all_files if date_pattern in os.path.basename(f)]
     
