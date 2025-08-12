@@ -1,16 +1,16 @@
 transformation_rules : 
     date_production :
-       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')
+       transformation : datetime.strptime(value, '%Y%m%d').strftime('%Y-%m-%d')
     # heure_production : 
     #    type : time
     #    form : '%H%M%S'
     date_emission :
-       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')
+       transformation : datetime.strptime(value, '%Y%m%d').strftime('%Y-%m-%d')
     montant :
        transformation : str(format(float(value)/100, (".2f")))
     date_execution : 
-       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')
+       transformation : datetime.strptime(value, '%Y%m%d').strftime('%Y-%m-%d')
     date_traitement :
-       transformation : datetime.strptime(value, '%Y%M%d').strftime('%Y-%M-%d')   
+       transformation : datetime.strptime(value, '%Y%m%d').strftime('%Y-%m-%d')   
     montant_total: 
        transformation : str(format(float(value)/100, (".2f")))

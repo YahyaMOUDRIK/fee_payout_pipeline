@@ -7,32 +7,85 @@ from scripts.transform import *
 from scripts.load import *
 from utils.file_utils import *
 
+import logging
+
+# Configuration du logger
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger(__name__)
+
+
 if __name__ == "__main__":
     
+    log.info("---- DÉMARRAGE DU PIPELINE DB -> FILE ----")
+
     db_config_yaml = "config/db_config.yaml"
     table_mapping = "config/table_mapping.yaml"
     transformation_rules = "config/transformation_rules.yaml"
     structure = "config/file_structure/fee_payouts_structure.yaml"
 
-    databases = read_yaml_file(db_config_yaml)["connections"]["databases"]
+    try:
+        databases = read_yaml_file(db_config_yaml)["connections"]["databases"]
+    except Exception as e:
+        log.error(f"Erreur lors de la lecture de la configuration YAML : {e}")
+        sys.exit(1)
+
     dbs = ["sinauto_mcma_"]
     type_aux = ['A', 'E', 'M', 'C']
-    for key, value in databases.items() :
-        if key.lower() in dbs :
-            for type_aux_curr in type_aux : 
-                print(type_aux_curr)
-                df = extract_from_sql(db_config_yaml, key, type_aux_curr)
+
+    for key, value in databases.items():
+        if key.lower() in dbs:
+            for type_aux_curr in type_aux:
+                log.info(f"--- Traitement pour base: {key}, type_aux: {type_aux_curr} ---")
+                try:
+                    df = extract_from_sql(db_config_yaml, key, type_aux_curr)
+                except Exception as e:
+                    log.error(f"Erreur lors de l'extraction depuis {key} : {e}")
+                    continue
 
                 if df is not None and not df.empty:
-                    print(f"Data extracted successfully for {key}")
-                    new_df = map_tables(df, table_mapping)
-                    print(f"{key} mapped successfully")
-                    final_df = transform_fields(new_df, transformation_rules)
-                    print(f"{key} transformed successfully")
-                    generate_simt_file(structure, final_df, 'asc', type_aux=type_aux_curr)
+                    log.info(f"Données extraites avec succès pour {key}")
+
+                    try:
+                        new_df = map_tables(df, table_mapping)
+                        log.info(f"{key} : mapping réussi")
+
+                        final_df = transform_fields(new_df, transformation_rules)
+                        log.info(f"{key} : transformation réussie")
+
+                        generate_simt_file(structure, final_df, 'asc', type_aux=type_aux_curr)
+                        log.info(f"{key} : fichier SIMT généré")
+
+                    except Exception as e:
+                        log.error(f"Erreur lors du traitement de {key}, type_aux={type_aux_curr} : {e}")
 
                 else:
-                    print(f"{key} couldn't be extracted or an error occurred.")
+                    log.warning(f"{key} : aucune donnée extraite ou erreur inconnue")
+
+    log.info("---- FIN DU PIPELINE DB -> FILE ----")    
+    # db_config_yaml = "config/db_config.yaml"
+    # table_mapping = "config/table_mapping.yaml"
+    # transformation_rules = "config/transformation_rules.yaml"
+    # structure = "config/file_structure/fee_payouts_structure.yaml"
+
+    # databases = read_yaml_file(db_config_yaml)["connections"]["databases"]
+    # dbs = ["sinauto_mcma_"]
+    # type_aux = ['A', 'E', 'M', 'C']
+    # for key, value in databases.items() :
+    #     if key.lower() in dbs :
+    #         for type_aux_curr in type_aux : 
+    #             print(type_aux_curr)
+    #             df = extract_from_sql(db_config_yaml, key, type_aux_curr)
+
+    #             if df is not None and not df.empty:
+    #                 print(f"Data extracted successfully for {key}")
+    #                 new_df = map_tables(df, table_mapping)
+    #                 print(f"{key} mapped successfully")
+    #                 final_df = transform_fields(new_df, transformation_rules)
+    #                 print(f"{key} transformed successfully")
+    #                 generate_simt_file(structure, final_df, 'asc', type_aux=type_aux_curr)
+
+    #             else:
+    #                 print(f"{key} couldn't be extracted or an error occurred.")
 
 
 
