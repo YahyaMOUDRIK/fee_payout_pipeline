@@ -8,7 +8,7 @@ This repository contains a production‑ready ETL that automates SIMT “viremen
 The project is fully YAML‑driven (layout, transformation rules, DB/field mapping) and includes robust parsing with validation and regex fallback, environment‑based I/O directories, and unit tests.
 
 
-## 📦 Project structure (essentials)
+## Project structure (essentials)
 
 ```
 projet_test/
@@ -42,7 +42,7 @@ projet_test/
 ```
 
 
-## 🔐 Environment variables
+## Environment variables
 
 Create a `.env` file and fill in your values.
 
