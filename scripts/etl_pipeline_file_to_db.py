@@ -45,13 +45,13 @@ if __name__ == "__main__":
     if external_directory and os.path.exists(external_directory) and os.access(external_directory, os.R_OK):
         print(f"Utilisation du dossier externe")
         directory_path = external_directory
-    else:
-        print(f"Dossier externe non accessible ou non défini, arrêt du traitement")
-        sys.exit(1)
     # else:
-    #     # Fallback vers le dossier de données du projet
-    #     print(f"Dossier externe non accessible, utilisation du dossier local")
-    #     directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'fee_payouts_status'))
+    #     print(f"Dossier externe non accessible ou non défini, arrêt du traitement")
+    #     sys.exit(1)
+    else:
+        # Fallback vers le dossier de données du projet
+        print(f"Dossier externe non accessible, utilisation du dossier local")
+        directory_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'fee_payouts_status'))
     
     print(f"Recherche dans: {directory_path}")
     all_files = glob.glob(os.path.join(directory_path, "*"))
