@@ -210,8 +210,8 @@ def check_environment_and_dependencies(**context):
     problems: list[str] = []
     # Directories
     for var, default in (
-        ('DATA_DIR_FEE_PAYOUTS', '/opt/airflow/data/fee_payouts'),
-        ('DATA_DIR_FEE_PAYOUTS_STATUS', '/opt/airflow/data/fee_payouts_status'),
+    ('DATA_DIR_FEE_PAYOUTS', '/mnt/mamda_data/fee_payouts'),
+    ('DATA_DIR_FEE_PAYOUTS_STATUS', '/mnt/mamda_data/fee_payouts_status'),
     ):
         path = os.environ.get(var, default)
         if ':' in path or not os.path.exists(path):

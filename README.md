@@ -140,18 +140,75 @@ Input expectation
 
 ## Phase 3 — Orchestration with Airflow
 
-The DAG `dags/expert_fee_dag.py` schedules a monthly pipeline using a host-trigger pattern:
-- Task run_db_to_file: drops a trigger file into `/triggers` (shared volume) to start Phase 1 on the Windows host.
-- Task check_files: polls `DATA_DIR_FEE_STATUS` (up to ~10 minutes) for files containing current `MMYY`.
-- Task run_file_to_db: if found, drops a trigger file for Phase 2 on the Windows host; otherwise, a `no_new_files` branch ends the run.
+What it does
+- Automates Phase 1 (DB ➜ File) and Phase 2 (File ➜ DB) on a monthly schedule using an Airflow DAG.
+- Current DAG: `dags/mamda_monthly_etl.py` (schedule: `0 2 1 * *`, no catchup).
+- Tasks:
+  - `run_db_to_file_etl`: runs `scripts/etl_pipeline_db_to_file.py` to generate SIMT files into `DATA_DIR_FEE_PAYOUTS` (subfolders by type: Avocats, Experts Automobiles, Medecins, Experts Comptables).
+  - `check_status_files`: scans `DATA_DIR_FEE_STATUS` for files containing current `MMYY`.
+  - `decide_file_to_db_execution`: branches based on presence of status files.
+  - `run_file_to_db_etl`: runs `scripts/etl_pipeline_file_to_db.py` to parse/transform/insert retour‑sort files.
+  - `cleanup_temp_files`: final housekeeping/logging.
 
-Host-runner (Windows)
-- Use `scripts/watch_triggers.ps1` to watch `C:\MAMDA\triggers` and run the ETL scripts with your local Python.
-- Ensure your Python/venv can import repo modules and that your `.env` points to the external data folders.
-- The compose file must mount `C:\MAMDA\triggers` to `/triggers` for all Airflow services.
+How it works
+- The DAG invokes the scripts as subprocesses and passes directories via environment variables:
+  - `DATA_DIR_FEE_PAYOUTS` → external outbound folder (bank integration files).
+  - `DATA_DIR_FEE_STATUS`  → external inbound folder (retour‑sort from bank).
+- `docker-compose.yaml` bind‑mounts your Windows folders into the containers so the DAG’s processes can read/write them.
+- Logs are written under `logs/` and visible in the Airflow UI per task.
 
-Local deployment
-- `docker-compose.yaml` runs Airflow locally (Webserver, Scheduler, Worker, etc.). Review volume mounts for `dags/`, `scripts/`, `utils/`, `config/`, `logs/`, external data folders, and the `triggers` directory.
+Run Phase 3 (Windows)
+1) Prerequisites
+	- Install Docker Desktop (with WSL2 backend).
+	- Ensure the Windows drive containing your external folders is shared in Docker Desktop (Settings → Resources → File Sharing).
+	- Install Git.
+2) Clone and configure
+	- Clone this repo.
+	- Create `.env` at the repo root with at least:
+	  - `DATA_DIR_FEE_PAYOUTS=C:/MAMDA/data/fee_payouts`
+	  - `DATA_DIR_FEE_STATUS=C:/MAMDA/data/fee_payouts_status`
+	  - `user_name=<sql_user>`
+	  - `password=<sql_password>`
+	- Verify these Windows folders exist; optionally pre‑create type subfolders under `fee_payouts/` (Avocats, Experts Automobiles, Medecins, Experts Comptables) to avoid permission issues on first write.
+3) Start Airflow
+	- From the repo root, bring up the stack: `docker compose up -d`.
+	- Wait ~60–90s for services (webserver, scheduler, worker) to become healthy.
+4) Verify mounts inside the worker (optional)
+	- `docker compose exec airflow-worker sh -lc "ls -la /mnt/mamda_data && env | grep DATA_DIR_FEE"`
+	- You should see `fee_payouts/` and `fee_payouts_status/` and the environment variables set.
+5) Run the pipeline
+	- Open Airflow UI at http://localhost:8080.
+	- Unpause/enable `mamda_monthly_etl_pipeline`.
+	- Trigger a run (Play button). Watch task logs to confirm which directories are used.
+6) Validate outputs
+	- Generated integration files should appear under `C:\MAMDA\data\fee_payouts\<TypeAux>/`.
+	- Retour‑sort ingestion reads from `C:\MAMDA\data\fee_payouts_status\` and inserts into SQL Server per mapping.
+
+Notes & tips
+- If you see “permission denied” when writing subfolders under `fee_payouts`, pre‑create those subfolders on Windows or adjust the container user in `docker-compose.yaml`.
+- If tasks complain about missing Python modules (e.g., `pyodbc`), ensure the container image installs dependencies from `requirements.txt` or via `_PIP_ADDITIONAL_REQUIREMENTS` in `docker-compose.yaml`.
+- If the DAG code doesn’t look updated in the UI, restart webserver/scheduler or `docker compose restart` to force a reload.
+- SQL Server named instance tip: ensure SQL Browser service is running on Windows and UDP 1434 is allowed in the firewall so containers can resolve `YAHYA\\SQLEXPRESS` via the ODBC driver. The compose file already maps `host.docker.internal` and `YAHYA` to the host.
+
+### Dockerfile and image
+- This project uses `docker-compose.yaml` with `build: .` so the image is built from the repository `Dockerfile`.
+- When to rebuild the image:
+	- After changing the `Dockerfile` (e.g., adding OS packages like `msodbcsql17`).
+	- After adding/removing Python packages used by the ETL (e.g., `python-docx`, `pyodbc`).
+- How to rebuild and restart (Windows PowerShell):
+
+```powershell
+docker compose build --no-cache ; docker compose up -d --force-recreate
+```
+
+- Optional verification inside the worker:
+
+```powershell
+docker compose exec airflow-worker sh -lc "python -c 'import pyodbc, pandas; print(\"deps ok\")' && odbcinst -q -d | sed -n '/ODBC Driver 17/p'"
+```
+
+- About requirements.txt:
+	- The current `Dockerfile` installs the needed Python packages inline. If you prefer managing dependencies via `requirements.txt`, you can modify the `Dockerfile` to `COPY requirements.txt` and `pip install -r requirements.txt`. Remember to rebuild the image afterward.
 
 
 ## Tests
