@@ -9,6 +9,28 @@ from utils.file_utils import *
 import re
 from datetime import datetime
 
+def valider_rib(rib):
+    """
+    The validation is based on the following algorithme : 
+    Checking if the last two digits match 97 minus the modulo 97 of the RIB with its key replaced by "00"
+    If one of the RIBs contained in the simt file is wrong then stop the processing of the file
+    """
+    #Delete spaces in RIB
+    rib = rib.replace(" ", "")
+    
+    #The RIB should be 24 digits long
+    if not rib.isdigit() or len(rib) != 24:
+        return False
+
+    #Separate la clé RIB
+    cle_rib = int(rib[-2:])
+
+    rib_sans_cle = rib[:-2] + "00"
+
+    reste = int(rib_sans_cle) % 97
+    cle_calculee = 97 - reste
+
+    return cle_rib == cle_calculee
 
 
 def validate_line(line, line_type):
@@ -68,6 +90,21 @@ def validate_line(line, line_type):
             rib_combined = rib_block_match.group(1)
             first_rib = rib_combined[:24]
             second_rib = rib_combined[24:48]
+
+            # Validation du premier RIB
+            if not valider_rib(first_rib):
+                errors.append(f"RIB donneur d'ordre invalide: {first_rib}")
+                is_valid = False
+                # Stop le traitement immédiatement avec une erreur
+                raise ValueError(f"RIB donneur d'ordre invalide: {first_rib}. Traitement arrêté.")
+            
+            # Validation du deuxième RIB
+            if not valider_rib(second_rib):
+                errors.append(f"RIB bénéficiaire invalide: {second_rib}")
+                is_valid = False
+                # Stop le traitement immédiatement avec une erreur
+                raise ValueError(f"RIB bénéficiaire invalide: {second_rib}. Traitement arrêté.")
+
             if not (first_rib.startswith('007') or second_rib.startswith('007')):
                 errors.append("Aucun des deux RIBs ne commence par '007' (RIB donneur d'ordre invalide).")
                 is_valid = False
@@ -234,14 +271,25 @@ def parse_file(file_path, structure_path):
         header_parsed_fields = parse_line(header_line, header_fields)
     else:
         header_parsed_fields = extract_fields(header_line, 'header')
+    
     # parse details data
-    for line in detail_lines:
-        is_valid, errors = validate_line(line, 'detail')
-        if is_valid:
-            details_parsed_fields.append(parse_line(line, detail_fields))
-        else:
-            # print(f"Detail validation errors on line: {errors}")
-            details_parsed_fields.append(extract_fields(line, 'detail'))
+    try : 
+        for line in detail_lines:
+            try :
+                is_valid, errors = validate_line(line, 'detail')
+                if is_valid:
+                    details_parsed_fields.append(parse_line(line, detail_fields))
+                else:
+                    # print(f"Detail validation errors on line: {errors}")
+                    details_parsed_fields.append(extract_fields(line, 'detail'))
+            except ValueError as e:
+                print(f"ERREUR CRITIQUE: {str(e)}")
+                raise 
+    except ValueError as e:
+        # If we get here, a RIB validation failed and processing should stop
+        parsed_lines['error'] = str(e)
+        return parsed_lines
+    
     # parse footer data
     is_valid, errors = validate_line(footer_line, 'footer')
     if is_valid:
@@ -257,6 +305,3 @@ def parse_file(file_path, structure_path):
     parsed_lines['details'] = details_parsed_fields
     parsed_lines['footer'] = footer_parsed_fields
     return parsed_lines
-
-# parsed_fields = parse_file('data/fee_payouts_status/AT_0825.asc' , 'config/file_structure/fee_payouts_status_structure.yaml')
-# print(parsed_fields)

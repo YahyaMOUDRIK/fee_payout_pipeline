@@ -1,0 +1,30 @@
+[2025-08-18T09:32:25.255+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-18T09:32:16.573604+00:00 [queued]>
+[2025-08-18T09:32:25.291+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-18T09:32:16.573604+00:00 [queued]>
+[2025-08-18T09:32:25.292+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2025-08-18T09:32:25.310+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): run_file_to_db_etl> on 2025-08-18 09:32:16.573604+00:00
+[2025-08-18T09:32:25.318+0000] {standard_task_runner.py:60} INFO - Started process 550 to run task
+[2025-08-18T09:32:25.324+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'run_file_to_db_etl', 'manual__2025-08-18T09:32:16.573604+00:00', '--job-id', '13', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmp97hcr8_r']
+[2025-08-18T09:32:25.326+0000] {standard_task_runner.py:88} INFO - Job 13: Subtask run_file_to_db_etl
+[2025-08-18T09:32:25.416+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-18T09:32:16.573604+00:00 [running]> on host 2361051357b0
+[2025-08-18T09:32:25.556+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='run_file_to_db_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-08-18T09:32:16.573604+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-18T09:32:16.573604+00:00'
+[2025-08-18T09:32:25.558+0000] {mamda_monthly_etl.py:165} INFO - === STARTING FILE TO DB ETL PIPELINE ===
+[2025-08-18T09:32:25.560+0000] {mamda_monthly_etl.py:176} INFO - Executing etl_pipeline_file_to_db.py...
+[2025-08-18T09:33:11.910+0000] {mamda_monthly_etl.py:190} INFO - STDOUT:
+Looking for newest files
+Dossier externe non accessible, utilisation du dossier local
+Recherche dans: /opt/***/dags/projet_test/data/fee_payouts_status
+Found 1 recent files
+Processing file: /opt/***/dags/projet_test/data/fee_payouts_status/AT_0825.asc
+Error connecting to database 'sinauto_mcma_': ('HYT00', '[HYT00] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0) (SQLDriverConnect)')
+Error connecting to database 'SinAuto_MCMA_retour': ('HYT00', '[HYT00] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0) (SQLDriverConnect)')
+Error connecting to database 'SinAT_MCMA_retour': ('HYT00', '[HYT00] [Microsoft][ODBC Driver 17 for SQL Server]Login timeout expired (0) (SQLDriverConnect)')
+Failed to establish connection to the databases
+Completed processing: /opt/***/dags/projet_test/data/fee_payouts_status/AT_0825.asc
+
+All files processed.
+
+[2025-08-18T09:33:11.911+0000] {mamda_monthly_etl.py:197} INFO - === FILE TO DB ETL COMPLETED SUCCESSFULLY ===
+[2025-08-18T09:33:11.912+0000] {python.py:202} INFO - Done. Returned value was: file_to_db_success
+[2025-08-18T09:33:11.934+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=run_file_to_db_etl, execution_date=20250818T093216, start_date=20250818T093225, end_date=20250818T093311
+[2025-08-18T09:33:11.970+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-18T09:33:11.996+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

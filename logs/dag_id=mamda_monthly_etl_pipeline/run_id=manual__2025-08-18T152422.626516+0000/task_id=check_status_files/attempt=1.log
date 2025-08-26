@@ -1,0 +1,15 @@
+[2025-08-18T15:24:27.831+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-18T15:24:22.626516+00:00 [queued]>
+[2025-08-18T15:24:27.864+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-18T15:24:22.626516+00:00 [queued]>
+[2025-08-18T15:24:27.866+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2025-08-18T15:24:27.900+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): check_status_files> on 2025-08-18 15:24:22.626516+00:00
+[2025-08-18T15:24:27.909+0000] {standard_task_runner.py:60} INFO - Started process 90 to run task
+[2025-08-18T15:24:27.916+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'check_status_files', 'manual__2025-08-18T15:24:22.626516+00:00', '--job-id', '7', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmp4r5kfegk']
+[2025-08-18T15:24:27.919+0000] {standard_task_runner.py:88} INFO - Job 7: Subtask check_status_files
+[2025-08-18T15:24:28.032+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-18T15:24:22.626516+00:00 [running]> on host 4f347db7da5a
+[2025-08-18T15:24:28.193+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='check_status_files' AIRFLOW_CTX_EXECUTION_DATE='2025-08-18T15:24:22.626516+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-18T15:24:22.626516+00:00'
+[2025-08-18T15:24:28.195+0000] {mamda_monthly_etl.py:103} INFO - === CHECK: STATUS FILES ===
+[2025-08-18T15:24:28.204+0000] {mamda_monthly_etl.py:122} INFO - Found 0 files matching MMYY=0725 in /opt/***/data/fee_payouts_status
+[2025-08-18T15:24:28.225+0000] {python.py:202} INFO - Done. Returned value was: False
+[2025-08-18T15:24:28.275+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=check_status_files, execution_date=20250818T152422, start_date=20250818T152427, end_date=20250818T152428
+[2025-08-18T15:24:28.332+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-18T15:24:28.385+0000] {taskinstance.py:3309} INFO - 1 downstream tasks scheduled from follow-on schedule check

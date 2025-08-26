@@ -1,0 +1,18 @@
+[2025-08-26T11:12:27.868+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-26T11:12:24.450064+00:00 [queued]>
+[2025-08-26T11:12:27.877+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-26T11:12:24.450064+00:00 [queued]>
+[2025-08-26T11:12:27.878+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-26T11:12:27.892+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): check_status_files> on 2025-08-26 11:12:24.450064+00:00
+[2025-08-26T11:12:27.898+0000] {standard_task_runner.py:60} INFO - Started process 74 to run task
+[2025-08-26T11:12:27.900+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'check_status_files', 'manual__2025-08-26T11:12:24.450064+00:00', '--job-id', '265', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmp6ttpfb7_']
+[2025-08-26T11:12:27.902+0000] {standard_task_runner.py:88} INFO - Job 265: Subtask check_status_files
+[2025-08-26T11:12:27.947+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-26T11:12:24.450064+00:00 [running]> on host 54c08829cb2d
+[2025-08-26T11:12:28.032+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='check_status_files' AIRFLOW_CTX_EXECUTION_DATE='2025-08-26T11:12:24.450064+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-26T11:12:24.450064+00:00'
+[2025-08-26T11:12:28.033+0000] {mamda_monthly_etl.py:113} INFO - === CHECK: STATUS FILES ===
+[2025-08-26T11:12:28.034+0000] {warnings.py:110} WARNING - /home/***/.local/lib/python3.11/site-packages/***/utils/context.py:315: AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+  warnings.warn(_create_deprecation_warning(k, replacements))
+
+[2025-08-26T11:12:28.039+0000] {mamda_monthly_etl.py:133} INFO - Found 2 files matching MMYY=0825 in /mnt/mamda/fee_payouts_status
+[2025-08-26T11:12:28.051+0000] {python.py:202} INFO - Done. Returned value was: True
+[2025-08-26T11:12:28.078+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=check_status_files, execution_date=20250826T111224, start_date=20250826T111227, end_date=20250826T111228
+[2025-08-26T11:12:28.111+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-26T11:12:28.136+0000] {taskinstance.py:3309} INFO - 1 downstream tasks scheduled from follow-on schedule check

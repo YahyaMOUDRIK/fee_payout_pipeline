@@ -1,0 +1,35 @@
+[2025-08-25T14:10:13.102+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-25T14:10:09.037219+00:00 [queued]>
+[2025-08-25T14:10:13.113+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-25T14:10:09.037219+00:00 [queued]>
+[2025-08-25T14:10:13.114+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-25T14:10:13.128+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): check_status_files> on 2025-08-25 14:10:09.037219+00:00
+[2025-08-25T14:10:13.134+0000] {standard_task_runner.py:60} INFO - Started process 963 to run task
+[2025-08-25T14:10:13.137+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'check_status_files', 'manual__2025-08-25T14:10:09.037219+00:00', '--job-id', '83', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmpdrropvzv']
+[2025-08-25T14:10:13.138+0000] {standard_task_runner.py:88} INFO - Job 83: Subtask check_status_files
+[2025-08-25T14:10:13.191+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-25T14:10:09.037219+00:00 [running]> on host 9f5b6f3413d6
+[2025-08-25T14:10:13.267+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='check_status_files' AIRFLOW_CTX_EXECUTION_DATE='2025-08-25T14:10:09.037219+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-25T14:10:09.037219+00:00'
+[2025-08-25T14:10:13.268+0000] {mamda_monthly_etl.py:103} INFO - === CHECK: STATUS FILES ===
+[2025-08-25T14:10:13.269+0000] {warnings.py:110} WARNING - /home/***/.local/lib/python3.11/site-packages/***/utils/context.py:315: AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+  warnings.warn(_create_deprecation_warning(k, replacements))
+
+[2025-08-25T14:10:13.272+0000] {taskinstance.py:2728} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/mamda_monthly_etl.py", line 131, in check_for_new_status_files
+    os.makedirs(local_dir, exist_ok=True)
+  File "<frozen os>", line 225, in makedirs
+FileExistsError: [Errno 17] File exists: '/opt/airflow/data/fee_payouts_status'
+[2025-08-25T14:10:13.289+0000] {taskinstance.py:1149} INFO - Marking task as FAILED. dag_id=mamda_monthly_etl_pipeline, task_id=check_status_files, execution_date=20250825T141009, start_date=20250825T141013, end_date=20250825T141013
+[2025-08-25T14:10:13.303+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 83 for task check_status_files ([Errno 17] File exists: '/opt/airflow/data/fee_payouts_status'; 963)
+[2025-08-25T14:10:13.351+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-08-25T14:10:13.374+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

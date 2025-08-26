@@ -1,0 +1,41 @@
+[2025-08-18T09:32:21.771+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-18T09:32:16.573604+00:00 [queued]>
+[2025-08-18T09:32:21.786+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-18T09:32:16.573604+00:00 [queued]>
+[2025-08-18T09:32:21.787+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2025-08-18T09:32:21.807+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): run_db_to_file_etl> on 2025-08-18 09:32:16.573604+00:00
+[2025-08-18T09:32:21.812+0000] {standard_task_runner.py:60} INFO - Started process 525 to run task
+[2025-08-18T09:32:21.816+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'run_db_to_file_etl', 'manual__2025-08-18T09:32:16.573604+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmprzt9rii3']
+[2025-08-18T09:32:21.819+0000] {standard_task_runner.py:88} INFO - Job 10: Subtask run_db_to_file_etl
+[2025-08-18T09:32:21.874+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-18T09:32:16.573604+00:00 [running]> on host 2361051357b0
+[2025-08-18T09:32:21.966+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='run_db_to_file_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-08-18T09:32:16.573604+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-18T09:32:16.573604+00:00'
+[2025-08-18T09:32:21.968+0000] {mamda_monthly_etl.py:47} INFO - === STARTING DB TO FILE ETL PIPELINE ===
+[2025-08-18T09:32:21.971+0000] {mamda_monthly_etl.py:58} INFO - Executing etl_pipeline_db_to_file.py...
+[2025-08-18T09:32:25.850+0000] {mamda_monthly_etl.py:74} WARNING - STDERR:
+Traceback (most recent call last):
+  File "/opt/***/dags/projet_test/scripts/etl_pipeline_db_to_file.py", line 7, in <module>
+    from scripts.load import *
+  File "/opt/***/dags/projet_test/scripts/load.py", line 9, in <module>
+    from docx import Document
+ModuleNotFoundError: No module named 'docx'
+
+[2025-08-18T09:32:25.851+0000] {mamda_monthly_etl.py:86} ERROR - Error in DB to File ETL: DB to File ETL failed with return code 1
+[2025-08-18T09:32:25.854+0000] {taskinstance.py:2728} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/mamda_monthly_etl.py", line 77, in run_db_to_file_etl
+    raise Exception(f"DB to File ETL failed with return code {result.returncode}")
+Exception: DB to File ETL failed with return code 1
+[2025-08-18T09:32:25.879+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=mamda_monthly_etl_pipeline, task_id=run_db_to_file_etl, execution_date=20250818T093216, start_date=20250818T093221, end_date=20250818T093225
+[2025-08-18T09:32:25.930+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 10 for task run_db_to_file_etl (DB to File ETL failed with return code 1; 525)
+[2025-08-18T09:32:25.967+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-08-18T09:32:26.021+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

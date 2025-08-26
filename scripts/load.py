@@ -1,6 +1,7 @@
 ''' File for writing the SIMT file from the extracted data. '''
 import sys
 import os
+import glob
 from dotenv import load_dotenv
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -71,21 +72,36 @@ def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None, ty
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     # output_dir = os.path.join(project_root, 'data', 'fee_payouts')
+    
+    # First try: Use absolute path from environment variable
+    # output_dir = os.getenv('DATA_DIR_FEE_PAYOUTS')
+    # if not output_dir or not os.path.exists(output_dir) or not os.access(output_dir, os.W_OK):
+    #     print("AVERTISSEMENT: Dossier externe non accessible ou non défini dans .env")
+    #     print("Utilisation du dossier local à la place.")
+    #     # Fallback: Use local path in project directory
+    #     output_dir = os.path.join(project_root, 'data', 'fee_payouts')
+    #     os.makedirs(output_dir, exist_ok=True)
+    #     print(f"Utilisation du dossier local: {output_dir}")
+    # else:
+    #     print(f"Utilisation du dossier externe")
     output_dir = os.getenv('DATA_DIR_FEE_PAYOUTS')
-    if not output_dir or not os.path.exists(output_dir) or not os.access(output_dir, os.W_OK):
+    # SIMPLE, RELIABLE CHECK: must be a directory
+    if not output_dir or not os.path.isdir(output_dir):
         print("AVERTISSEMENT: Dossier externe non accessible ou non défini dans .env")
-        print("Arrêt du traitement.")
-        sys.exit(1)
+        print("Utilisation du dossier local à la place.")
+        output_dir = os.path.join(project_root, 'data', 'fee_payouts')
+        os.makedirs(output_dir, exist_ok=True)
+        print(f"Utilisation du dossier local: {output_dir}")
     else:
         print(f"Utilisation du dossier externe")
 
     
-    os.makedirs(output_dir, exist_ok=True) 
+    # os.makedirs(output_dir, exist_ok=True) 
 
     if type_aux and type_aux in type_aux_folders:
         subfolder = type_aux_folders[type_aux]
         output_dir = os.path.join(output_dir, subfolder)
-        # Créer le sous-dossier s'il n'existe pas
+        # Create subfolder if it doesn't exist
         os.makedirs(output_dir, exist_ok=True)
 
     date_emission_dt = pd.to_datetime(df["date_emission"])
@@ -99,10 +115,39 @@ def generate_simt_file(yaml_path, df, extension="txt", month=None, year=None, ty
 
     df_filtered = df[(date_emission_dt.dt.month == selected_month) & (date_emission_dt.dt.year == selected_year)].copy()
 
-    if "reference_remise" in df_filtered.columns and not df_filtered.empty:
-        reference_remise = str(df_filtered['reference_remise'].iloc[0])
-    else:
-        reference_remise = "NOREF"
+    # if "reference_remise" in df.columns and not df.empty:
+    #     reference_remise = str(df['reference_remise'].iloc[0])
+    # else:
+    #     reference_remise = "NOREF"
+    
+    # Check if a file with this reference_remise already exists
+    # existing_files = glob.glob(os.path.join(output_dir, f'{reference_remise}_*'))
+    # if existing_files:
+    #     print(f"AVERTISSEMENT: Un fichier avec la référence '{reference_remise}' existe déjà.")
+    #     print(f"Fichier existant: {os.path.basename(existing_files[0])}")
+    #     print("Génération annulée pour éviter les doublons.")
+    #     return existing_files[0]  # Return path to existing file
+
+    # existing = [f for f in glob.glob(os.path.join(output_dir, f"{reference_remise}_*")) 
+    #        if os.path.dirname(os.path.abspath(f)) == os.path.abspath(output_dir)]
+    # if existing:
+    #     print(f"AVERTISSEMENT: Un fichier avec la référence '{reference_remise}' existe déjà.")
+    #     print(f"Fichier existant: {os.path.basename(existing[0])}")
+    #     print(f"Génération annulée pour éviter les doublons.")
+    #     return existing[0]
+    
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Duplicate check ONLY in output_dir
+    reference_remise = str(df['reference_remise'].iloc[0]) if not df.empty and 'reference_remise' in df.columns else 'NOREF'
+    pattern = os.path.join(output_dir, f"{reference_remise}_*")
+    existing = [p for p in glob.glob(pattern) if os.path.dirname(os.path.abspath(p)) == os.path.abspath(output_dir)]
+    if existing:
+        print(f"AVERTISSEMENT: Un fichier avec la référence '{reference_remise}' existe déjà.")
+        print(f"Fichier existant: {os.path.basename(existing[0])}")
+        return existing[0]
+
+
     output_path = os.path.join(output_dir, f'{reference_remise}_{date}_{time}.{extension}')
     
     # Check if the YAML file exists and read its structure

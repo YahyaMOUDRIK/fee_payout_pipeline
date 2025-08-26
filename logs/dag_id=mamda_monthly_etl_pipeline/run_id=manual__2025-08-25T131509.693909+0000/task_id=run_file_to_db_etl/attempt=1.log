@@ -1,0 +1,30 @@
+[2025-08-25T13:15:19.598+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-25T13:15:09.693909+00:00 [queued]>
+[2025-08-25T13:15:19.619+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-25T13:15:09.693909+00:00 [queued]>
+[2025-08-25T13:15:19.620+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-25T13:15:19.644+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): run_file_to_db_etl> on 2025-08-25 13:15:09.693909+00:00
+[2025-08-25T13:15:19.654+0000] {standard_task_runner.py:60} INFO - Started process 88 to run task
+[2025-08-25T13:15:19.660+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'run_file_to_db_etl', 'manual__2025-08-25T13:15:09.693909+00:00', '--job-id', '51', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmpvl1zppoi']
+[2025-08-25T13:15:19.663+0000] {standard_task_runner.py:88} INFO - Job 51: Subtask run_file_to_db_etl
+[2025-08-25T13:15:19.777+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-25T13:15:09.693909+00:00 [running]> on host 9f5b6f3413d6
+[2025-08-25T13:15:19.927+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='run_file_to_db_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-08-25T13:15:09.693909+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-25T13:15:09.693909+00:00'
+[2025-08-25T13:15:19.929+0000] {mamda_monthly_etl.py:134} INFO - === START: FILE -> DB ETL ===
+[2025-08-25T13:15:22.636+0000] {mamda_monthly_etl.py:152} INFO - FILE->DB STDOUT:
+Looking for newest files
+Utilisation du dossier externe
+Recherche dans: /opt/***/data/fee_payouts_status
+Found 2 recent files
+Processing file: /opt/***/data/fee_payouts_status/AT_0825.asc
+ERREUR CRITIQUE: RIB donneur d'ordre invalide: 007780010065258741236532. Traitement arrêté.
+Erreur critique dans AT_0825.asc: RIB donneur d'ordre invalide: 007780010065258741236532. Traitement arrêté.
+Traitement du fichier arrêté.
+Processing file: /opt/***/data/fee_payouts_status/Auto_0825.asc
+ERREUR CRITIQUE: RIB donneur d'ordre invalide: 007780000065258741236532. Traitement arrêté.
+Erreur critique dans Auto_0825.asc: RIB donneur d'ordre invalide: 007780000065258741236532. Traitement arrêté.
+Traitement du fichier arrêté.
+All files processed.
+
+[2025-08-25T13:15:22.637+0000] {mamda_monthly_etl.py:162} INFO - === DONE: FILE -> DB ETL ===
+[2025-08-25T13:15:22.638+0000] {python.py:202} INFO - Done. Returned value was: None
+[2025-08-25T13:15:22.658+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=run_file_to_db_etl, execution_date=20250825T131509, start_date=20250825T131519, end_date=20250825T131522
+[2025-08-25T13:15:22.757+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-25T13:15:22.825+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

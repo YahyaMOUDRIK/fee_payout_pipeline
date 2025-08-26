@@ -1,0 +1,49 @@
+[2025-08-25T14:47:09.405+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-25T14:47:05.536621+00:00 [queued]>
+[2025-08-25T14:47:09.417+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-25T14:47:05.536621+00:00 [queued]>
+[2025-08-25T14:47:09.418+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-25T14:47:09.432+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): run_db_to_file_etl> on 2025-08-25 14:47:05.536621+00:00
+[2025-08-25T14:47:09.437+0000] {standard_task_runner.py:60} INFO - Started process 1472 to run task
+[2025-08-25T14:47:09.440+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'run_db_to_file_etl', 'manual__2025-08-25T14:47:05.536621+00:00', '--job-id', '90', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmpgpvkvpdk']
+[2025-08-25T14:47:09.441+0000] {standard_task_runner.py:88} INFO - Job 90: Subtask run_db_to_file_etl
+[2025-08-25T14:47:09.488+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-25T14:47:05.536621+00:00 [running]> on host 9f5b6f3413d6
+[2025-08-25T14:47:09.571+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='run_db_to_file_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-08-25T14:47:05.536621+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-25T14:47:05.536621+00:00'
+[2025-08-25T14:47:09.572+0000] {mamda_monthly_etl.py:75} INFO - === START: DB -> FILE ETL ===
+[2025-08-25T14:47:11.200+0000] {mamda_monthly_etl.py:89} INFO - DB->FILE STDOUT:
+AVERTISSEMENT: Dossier externe non accessible ou non défini dans .env
+Utilisation du dossier local à la place.
+AVERTISSEMENT: Dossier externe non accessible ou non défini dans .env
+Utilisation du dossier local à la place.
+AVERTISSEMENT: Dossier externe non accessible ou non défini dans .env
+Utilisation du dossier local à la place.
+AVERTISSEMENT: Dossier externe non accessible ou non défini dans .env
+Utilisation du dossier local à la place.
+
+[2025-08-25T14:47:11.200+0000] {mamda_monthly_etl.py:91} WARNING - DB->FILE STDERR:
+INFO:__main__:---- DÉMARRAGE DU PIPELINE DB -> FILE ----
+INFO:__main__:--- Traitement pour base: sinauto_mcma_, type_aux: A ---
+INFO:__main__:Données extraites avec succès pour sinauto_mcma_
+INFO:__main__:sinauto_mcma_ : mapping réussi
+INFO:__main__:sinauto_mcma_ : transformation réussie
+ERROR:__main__:Erreur lors du traitement de sinauto_mcma_, type_aux=A : [Errno 17] File exists: '/opt/***/data/fee_payouts'
+INFO:__main__:--- Traitement pour base: sinauto_mcma_, type_aux: E ---
+INFO:__main__:Données extraites avec succès pour sinauto_mcma_
+INFO:__main__:sinauto_mcma_ : mapping réussi
+INFO:__main__:sinauto_mcma_ : transformation réussie
+ERROR:__main__:Erreur lors du traitement de sinauto_mcma_, type_aux=E : [Errno 17] File exists: '/opt/***/data/fee_payouts'
+INFO:__main__:--- Traitement pour base: sinauto_mcma_, type_aux: M ---
+INFO:__main__:Données extraites avec succès pour sinauto_mcma_
+INFO:__main__:sinauto_mcma_ : mapping réussi
+INFO:__main__:sinauto_mcma_ : transformation réussie
+ERROR:__main__:Erreur lors du traitement de sinauto_mcma_, type_aux=M : [Errno 17] File exists: '/opt/***/data/fee_payouts'
+INFO:__main__:--- Traitement pour base: sinauto_mcma_, type_aux: C ---
+INFO:__main__:Données extraites avec succès pour sinauto_mcma_
+INFO:__main__:sinauto_mcma_ : mapping réussi
+INFO:__main__:sinauto_mcma_ : transformation réussie
+ERROR:__main__:Erreur lors du traitement de sinauto_mcma_, type_aux=C : [Errno 17] File exists: '/opt/***/data/fee_payouts'
+INFO:__main__:---- FIN DU PIPELINE DB -> FILE ----
+
+[2025-08-25T14:47:11.201+0000] {mamda_monthly_etl.py:99} INFO - === DONE: DB -> FILE ETL ===
+[2025-08-25T14:47:11.202+0000] {python.py:202} INFO - Done. Returned value was: None
+[2025-08-25T14:47:11.212+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=run_db_to_file_etl, execution_date=20250825T144705, start_date=20250825T144709, end_date=20250825T144711
+[2025-08-25T14:47:11.259+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-25T14:47:11.276+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

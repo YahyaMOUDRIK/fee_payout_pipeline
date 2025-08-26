@@ -1,0 +1,33 @@
+[2025-08-26T09:21:59.047+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-26T09:21:57.296990+00:00 [queued]>
+[2025-08-26T09:21:59.055+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-26T09:21:57.296990+00:00 [queued]>
+[2025-08-26T09:21:59.056+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-26T09:21:59.070+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): check_status_files> on 2025-08-26 09:21:57.296990+00:00
+[2025-08-26T09:21:59.078+0000] {standard_task_runner.py:60} INFO - Started process 221 to run task
+[2025-08-26T09:21:59.080+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'check_status_files', 'manual__2025-08-26T09:21:57.296990+00:00', '--job-id', '156', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmpcm9ney23']
+[2025-08-26T09:21:59.081+0000] {standard_task_runner.py:88} INFO - Job 156: Subtask check_status_files
+[2025-08-26T09:21:59.131+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.check_status_files manual__2025-08-26T09:21:57.296990+00:00 [running]> on host 9f5b6f3413d6
+[2025-08-26T09:21:59.214+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='check_status_files' AIRFLOW_CTX_EXECUTION_DATE='2025-08-26T09:21:57.296990+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-26T09:21:57.296990+00:00'
+[2025-08-26T09:21:59.215+0000] {mamda_monthly_etl.py:124} INFO - === CHECK: STATUS FILES ===
+[2025-08-26T09:21:59.217+0000] {taskinstance.py:2728} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/mamda_monthly_etl.py", line 148, in check_for_new_status_files
+    local_status.mkdir(parents=True, exist_ok=True)
+  File "/usr/local/lib/python3.11/pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/opt/airflow/data/fee_payouts_status'
+[2025-08-26T09:21:59.229+0000] {taskinstance.py:1149} INFO - Marking task as FAILED. dag_id=mamda_monthly_etl_pipeline, task_id=check_status_files, execution_date=20250826T092157, start_date=20250826T092159, end_date=20250826T092159
+[2025-08-26T09:21:59.239+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 156 for task check_status_files ([Errno 17] File exists: '/opt/airflow/data/fee_payouts_status'; 221)
+[2025-08-26T09:21:59.253+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-08-26T09:21:59.276+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

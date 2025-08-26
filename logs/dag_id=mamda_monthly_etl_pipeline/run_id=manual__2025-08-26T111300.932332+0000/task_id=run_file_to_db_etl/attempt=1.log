@@ -1,0 +1,27 @@
+[2025-08-26T11:13:06.695+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-26T11:13:00.932332+00:00 [queued]>
+[2025-08-26T11:13:06.708+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-26T11:13:00.932332+00:00 [queued]>
+[2025-08-26T11:13:06.709+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-26T11:13:06.736+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): run_file_to_db_etl> on 2025-08-26 11:13:00.932332+00:00
+[2025-08-26T11:13:06.743+0000] {standard_task_runner.py:60} INFO - Started process 157 to run task
+[2025-08-26T11:13:06.745+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'run_file_to_db_etl', 'manual__2025-08-26T11:13:00.932332+00:00', '--job-id', '280', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmpa03wtsve']
+[2025-08-26T11:13:06.746+0000] {standard_task_runner.py:88} INFO - Job 280: Subtask run_file_to_db_etl
+[2025-08-26T11:13:06.798+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-26T11:13:00.932332+00:00 [running]> on host 54c08829cb2d
+[2025-08-26T11:13:06.880+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='run_file_to_db_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-08-26T11:13:00.932332+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-26T11:13:00.932332+00:00'
+[2025-08-26T11:13:06.881+0000] {mamda_monthly_etl.py:144} INFO - === START: FILE -> DB ETL ===
+[2025-08-26T11:13:31.337+0000] {mamda_monthly_etl.py:162} INFO - FILE->DB STDOUT:
+Looking for newest files
+Utilisation du dossier externe
+Recherche dans: /opt/***/data/fee_payouts_status
+Found 1 recent files
+Processing file: /opt/***/data/fee_payouts_status/AT_0825.asc
+db chosen is SinAT_MCMA_retour
+File AT_0825.asc has already been processed. Skipping.
+Completed processing: /opt/***/data/fee_payouts_status/AT_0825.asc
+
+All files processed.
+
+[2025-08-26T11:13:31.338+0000] {mamda_monthly_etl.py:172} INFO - === DONE: FILE -> DB ETL ===
+[2025-08-26T11:13:31.339+0000] {python.py:202} INFO - Done. Returned value was: None
+[2025-08-26T11:13:31.350+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=run_file_to_db_etl, execution_date=20250826T111300, start_date=20250826T111306, end_date=20250826T111331
+[2025-08-26T11:13:31.379+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-26T11:13:31.404+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

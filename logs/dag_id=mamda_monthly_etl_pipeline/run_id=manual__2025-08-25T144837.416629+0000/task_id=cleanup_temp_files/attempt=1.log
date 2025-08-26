@@ -1,0 +1,14 @@
+[2025-08-25T14:48:45.032+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.cleanup_temp_files manual__2025-08-25T14:48:37.416629+00:00 [queued]>
+[2025-08-25T14:48:45.049+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.cleanup_temp_files manual__2025-08-25T14:48:37.416629+00:00 [queued]>
+[2025-08-25T14:48:45.050+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-25T14:48:45.072+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): cleanup_temp_files> on 2025-08-25 14:48:37.416629+00:00
+[2025-08-25T14:48:45.078+0000] {standard_task_runner.py:60} INFO - Started process 1561 to run task
+[2025-08-25T14:48:45.081+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'cleanup_temp_files', 'manual__2025-08-25T14:48:37.416629+00:00', '--job-id', '105', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmpfslomns0']
+[2025-08-25T14:48:45.083+0000] {standard_task_runner.py:88} INFO - Job 105: Subtask cleanup_temp_files
+[2025-08-25T14:48:45.135+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.cleanup_temp_files manual__2025-08-25T14:48:37.416629+00:00 [running]> on host 9f5b6f3413d6
+[2025-08-25T14:48:45.221+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='cleanup_temp_files' AIRFLOW_CTX_EXECUTION_DATE='2025-08-25T14:48:37.416629+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-25T14:48:37.416629+00:00'
+[2025-08-25T14:48:45.223+0000] {mamda_monthly_etl.py:198} INFO - Cleanup finished
+[2025-08-25T14:48:45.223+0000] {python.py:202} INFO - Done. Returned value was: None
+[2025-08-25T14:48:45.233+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=cleanup_temp_files, execution_date=20250825T144837, start_date=20250825T144845, end_date=20250825T144845
+[2025-08-25T14:48:45.254+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-25T14:48:45.270+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

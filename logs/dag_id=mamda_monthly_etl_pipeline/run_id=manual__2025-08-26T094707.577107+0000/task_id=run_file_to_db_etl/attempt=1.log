@@ -1,0 +1,43 @@
+[2025-08-26T09:47:12.577+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-26T09:47:07.577107+00:00 [queued]>
+[2025-08-26T09:47:12.601+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-26T09:47:07.577107+00:00 [queued]>
+[2025-08-26T09:47:12.602+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-26T09:47:12.635+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): run_file_to_db_etl> on 2025-08-26 09:47:07.577107+00:00
+[2025-08-26T09:47:12.641+0000] {standard_task_runner.py:60} INFO - Started process 84 to run task
+[2025-08-26T09:47:12.645+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'run_file_to_db_etl', 'manual__2025-08-26T09:47:07.577107+00:00', '--job-id', '189', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmp42r4aa4m']
+[2025-08-26T09:47:12.647+0000] {standard_task_runner.py:88} INFO - Job 189: Subtask run_file_to_db_etl
+[2025-08-26T09:47:12.698+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.run_file_to_db_etl manual__2025-08-26T09:47:07.577107+00:00 [running]> on host 9f5b6f3413d6
+[2025-08-26T09:47:12.785+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='run_file_to_db_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-08-26T09:47:07.577107+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-26T09:47:07.577107+00:00'
+[2025-08-26T09:47:12.786+0000] {mamda_monthly_etl.py:171} INFO - === START: FILE -> DB ETL ===
+[2025-08-26T09:47:12.788+0000] {taskinstance.py:2728} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/mamda_monthly_etl.py", line 67, in _compose_env_for_subprocess
+    os.makedirs(payouts_dir, exist_ok=True)
+  File "<frozen os>", line 225, in makedirs
+FileExistsError: [Errno 17] File exists: '/opt/airflow/data/fee_payouts'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/mamda_monthly_etl.py", line 172, in run_file_to_db_etl
+    env = _compose_env_for_subprocess()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/mamda_monthly_etl.py", line 71, in _compose_env_for_subprocess
+    os.makedirs(payouts_dir, exist_ok=True)
+  File "<frozen os>", line 225, in makedirs
+FileExistsError: [Errno 17] File exists: '/opt/airflow/data/fee_payouts'
+[2025-08-26T09:47:12.800+0000] {taskinstance.py:1149} INFO - Marking task as FAILED. dag_id=mamda_monthly_etl_pipeline, task_id=run_file_to_db_etl, execution_date=20250826T094707, start_date=20250826T094712, end_date=20250826T094712
+[2025-08-26T09:47:12.812+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 189 for task run_file_to_db_etl ([Errno 17] File exists: '/opt/airflow/data/fee_payouts'; 84)
+[2025-08-26T09:47:12.858+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-08-26T09:47:12.874+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -22,18 +22,21 @@ def connect_to_dbs(db_config_yaml):
     username = os.getenv('user_name')
     password = os.getenv('password')
     connections = {}
-    for key, value in dbs.items() :
+    for key, value in dbs.items():
         try:
-            connections[key] = pyodbc.connect(f'Driver={value['driver']};'
-                            f'UID={username};'
-                            f'PWD={password};'
-                            f'SERVER={value['server']};'
-                            f'Database={key};')
-                            # f'Trusted_Connection={value['trusted_connection']};')
-            # print(f"Connection to the database was successful.")
+            # Use double-quoted f-strings to avoid quote conflicts
+            conn_str = (
+                f"Driver={{{value['driver']}}};"
+                f"UID={username};"
+                f"PWD={password};"
+                f"SERVER={value['server']};"
+                f"Database={key};"
+            )
+            connections[key] = pyodbc.connect(conn_str)
         except pyodbc.Error as e:
-            print(f"Error connecting to database: {e}")
-            return None
+            print(f"Error connecting to database '{key}': {e}")
+            # Continue attempting other databases rather than aborting all
+            continue
     return connections    
 
 

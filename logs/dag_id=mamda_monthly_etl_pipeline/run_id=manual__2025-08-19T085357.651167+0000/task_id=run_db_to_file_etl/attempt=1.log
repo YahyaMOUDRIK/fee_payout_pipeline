@@ -1,0 +1,41 @@
+[2025-08-19T08:54:00.785+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-19T08:53:57.651167+00:00 [queued]>
+[2025-08-19T08:54:00.814+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-19T08:53:57.651167+00:00 [queued]>
+[2025-08-19T08:54:00.814+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2025-08-19T08:54:00.835+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): run_db_to_file_etl> on 2025-08-19 08:53:57.651167+00:00
+[2025-08-19T08:54:00.841+0000] {standard_task_runner.py:60} INFO - Started process 144 to run task
+[2025-08-19T08:54:00.846+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'run_db_to_file_etl', 'manual__2025-08-19T08:53:57.651167+00:00', '--job-id', '22', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmpghhd3oty']
+[2025-08-19T08:54:00.849+0000] {standard_task_runner.py:88} INFO - Job 22: Subtask run_db_to_file_etl
+[2025-08-19T08:54:00.932+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.run_db_to_file_etl manual__2025-08-19T08:53:57.651167+00:00 [running]> on host 62d1bb0496b0
+[2025-08-19T08:54:01.044+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='run_db_to_file_etl' AIRFLOW_CTX_EXECUTION_DATE='2025-08-19T08:53:57.651167+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-19T08:53:57.651167+00:00'
+[2025-08-19T08:54:01.047+0000] {mamda_monthly_etl.py:75} INFO - === START: DB -> FILE ETL ===
+[2025-08-19T08:54:02.160+0000] {mamda_monthly_etl.py:91} WARNING - DB->FILE STDERR:
+Traceback (most recent call last):
+  File "/opt/***/scripts/etl_pipeline_db_to_file.py", line 7, in <module>
+    from scripts.load import *
+  File "/opt/***/scripts/load.py", line 9, in <module>
+    from docx import Document
+ModuleNotFoundError: No module named 'docx'
+
+[2025-08-19T08:54:02.161+0000] {taskinstance.py:2728} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/mamda_monthly_etl.py", line 92, in run_db_to_file_etl
+    _fail_on_error_markers(result, [
+  File "/opt/airflow/dags/mamda_monthly_etl.py", line 71, in _fail_on_error_markers
+    raise RuntimeError(f"Detected error in child script output: {m}")
+RuntimeError: Detected error in child script output: Traceback (most recent call last):
+[2025-08-19T08:54:02.183+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=mamda_monthly_etl_pipeline, task_id=run_db_to_file_etl, execution_date=20250819T085357, start_date=20250819T085400, end_date=20250819T085402
+[2025-08-19T08:54:02.198+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 22 for task run_db_to_file_etl (Detected error in child script output: Traceback (most recent call last):; 144)
+[2025-08-19T08:54:02.226+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-08-19T08:54:02.256+0000] {taskinstance.py:3309} INFO - 0 downstream tasks scheduled from follow-on schedule check

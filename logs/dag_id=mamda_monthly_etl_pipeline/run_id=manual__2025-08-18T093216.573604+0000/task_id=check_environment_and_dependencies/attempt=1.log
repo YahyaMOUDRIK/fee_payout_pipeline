@@ -1,0 +1,31 @@
+[2025-08-18T09:32:19.350+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_environment_and_dependencies manual__2025-08-18T09:32:16.573604+00:00 [queued]>
+[2025-08-18T09:32:19.363+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_environment_and_dependencies manual__2025-08-18T09:32:16.573604+00:00 [queued]>
+[2025-08-18T09:32:19.364+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2025-08-18T09:32:19.381+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): check_environment_and_dependencies> on 2025-08-18 09:32:16.573604+00:00
+[2025-08-18T09:32:19.388+0000] {standard_task_runner.py:60} INFO - Started process 517 to run task
+[2025-08-18T09:32:19.392+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'check_environment_and_dependencies', 'manual__2025-08-18T09:32:16.573604+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmpz2g_gys1']
+[2025-08-18T09:32:19.394+0000] {standard_task_runner.py:88} INFO - Job 5: Subtask check_environment_and_dependencies
+[2025-08-18T09:32:19.451+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.check_environment_and_dependencies manual__2025-08-18T09:32:16.573604+00:00 [running]> on host 2361051357b0
+[2025-08-18T09:32:19.541+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='check_environment_and_dependencies' AIRFLOW_CTX_EXECUTION_DATE='2025-08-18T09:32:16.573604+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-18T09:32:16.573604+00:00'
+[2025-08-18T09:32:19.544+0000] {mamda_monthly_etl.py:211} INFO - === CHECKING ENVIRONMENT AND DEPENDENCIES ===
+[2025-08-18T09:32:19.545+0000] {mamda_monthly_etl.py:221} INFO - ✓ Found directory: config
+[2025-08-18T09:32:19.547+0000] {mamda_monthly_etl.py:221} INFO - ✓ Found directory: scripts
+[2025-08-18T09:32:19.548+0000] {mamda_monthly_etl.py:221} INFO - ✓ Found directory: utils
+[2025-08-18T09:32:19.550+0000] {mamda_monthly_etl.py:237} INFO - ✓ Found config: config/db_config.yaml
+[2025-08-18T09:32:19.552+0000] {mamda_monthly_etl.py:237} INFO - ✓ Found config: config/table_mapping.yaml
+[2025-08-18T09:32:19.554+0000] {mamda_monthly_etl.py:237} INFO - ✓ Found config: config/retour_sort_mapping.yaml
+[2025-08-18T09:32:19.556+0000] {mamda_monthly_etl.py:237} INFO - ✓ Found config: config/transformation_rules.yaml
+[2025-08-18T09:32:19.557+0000] {mamda_monthly_etl.py:237} INFO - ✓ Found config: config/retour_sort_transformation_rules.yaml
+[2025-08-18T09:32:19.558+0000] {mamda_monthly_etl.py:245} INFO - ✓ Environment variable set: DATA_DIR_FEE_PAYOUTS
+[2025-08-18T09:32:19.558+0000] {mamda_monthly_etl.py:245} INFO - ✓ Environment variable set: DATA_DIR_FEE_STATUS
+[2025-08-18T09:32:19.559+0000] {mamda_monthly_etl.py:245} INFO - ✓ Environment variable set: user_name
+[2025-08-18T09:32:19.559+0000] {mamda_monthly_etl.py:245} INFO - ✓ Environment variable set: password
+[2025-08-18T09:32:19.561+0000] {mamda_monthly_etl.py:257} INFO - ✓ Data directory accessible: fee_payouts -> /mnt/fee_payouts
+[2025-08-18T09:32:19.563+0000] {mamda_monthly_etl.py:257} INFO - ✓ Data directory accessible: fee_status -> /mnt/fee_status
+[2025-08-18T09:32:19.588+0000] {mamda_monthly_etl.py:264} INFO - ✓ pyodbc available
+[2025-08-18T09:32:19.589+0000] {mamda_monthly_etl.py:270} INFO - ✓ yaml available
+[2025-08-18T09:32:19.589+0000] {mamda_monthly_etl.py:280} INFO - === ENVIRONMENT CHECK PASSED ===
+[2025-08-18T09:32:19.590+0000] {python.py:202} INFO - Done. Returned value was: environment_check_success
+[2025-08-18T09:32:19.615+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=check_environment_and_dependencies, execution_date=20250818T093216, start_date=20250818T093219, end_date=20250818T093219
+[2025-08-18T09:32:19.647+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-18T09:32:19.677+0000] {taskinstance.py:3309} INFO - 2 downstream tasks scheduled from follow-on schedule check

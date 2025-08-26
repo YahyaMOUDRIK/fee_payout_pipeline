@@ -1,0 +1,17 @@
+[2025-08-18T09:32:22.753+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.decide_file_to_db_execution manual__2025-08-18T09:32:16.573604+00:00 [queued]>
+[2025-08-18T09:32:22.767+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.decide_file_to_db_execution manual__2025-08-18T09:32:16.573604+00:00 [queued]>
+[2025-08-18T09:32:22.769+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2025-08-18T09:32:22.804+0000] {taskinstance.py:2214} INFO - Executing <Task(BranchPythonOperator): decide_file_to_db_execution> on 2025-08-18 09:32:16.573604+00:00
+[2025-08-18T09:32:22.826+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'decide_file_to_db_execution', 'manual__2025-08-18T09:32:16.573604+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmp0xr2ix1j']
+[2025-08-18T09:32:22.819+0000] {standard_task_runner.py:60} INFO - Started process 546 to run task
+[2025-08-18T09:32:22.829+0000] {standard_task_runner.py:88} INFO - Job 11: Subtask decide_file_to_db_execution
+[2025-08-18T09:32:22.997+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.decide_file_to_db_execution manual__2025-08-18T09:32:16.573604+00:00 [running]> on host 2361051357b0
+[2025-08-18T09:32:23.193+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='decide_file_to_db_execution' AIRFLOW_CTX_EXECUTION_DATE='2025-08-18T09:32:16.573604+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-18T09:32:16.573604+00:00'
+[2025-08-18T09:32:23.242+0000] {mamda_monthly_etl.py:154} INFO - Files found - proceeding with file-to-db ETL
+[2025-08-18T09:32:23.245+0000] {python.py:202} INFO - Done. Returned value was: run_file_to_db_etl
+[2025-08-18T09:32:23.247+0000] {branch.py:35} INFO - Branch into run_file_to_db_etl
+[2025-08-18T09:32:23.249+0000] {skipmixin.py:178} INFO - Following branch run_file_to_db_etl
+[2025-08-18T09:32:23.293+0000] {skipmixin.py:244} INFO - Skipping tasks [('skip_file_to_db_etl', -1)]
+[2025-08-18T09:32:23.409+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=decide_file_to_db_execution, execution_date=20250818T093216, start_date=20250818T093222, end_date=20250818T093223
+[2025-08-18T09:32:23.514+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-18T09:32:23.598+0000] {taskinstance.py:3309} INFO - 1 downstream tasks scheduled from follow-on schedule check

@@ -16,6 +16,13 @@ def process_file(file_path, structure_path, rules, db_config, mapping_path):
     print(f"Processing file: {file_path}")
     try:
         data = parse_file(file_path, structure_path)
+
+        # Check if there was a RIB validation error
+        if data and 'error' in data:
+            print(f"Erreur critique dans {os.path.basename(file_path)}: {data['error']}")
+            print(f"Traitement du fichier arrêté.")
+            return None
+        
         transformed_data = transform_fields(data, rules)
         result = insert_status_data(transformed_data, db_config, mapping_path)
         print(f"Completed processing: {file_path}\n")

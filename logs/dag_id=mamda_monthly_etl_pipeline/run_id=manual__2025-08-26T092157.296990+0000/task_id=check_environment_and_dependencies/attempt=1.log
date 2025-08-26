@@ -1,0 +1,16 @@
+[2025-08-26T09:21:57.908+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_environment_and_dependencies manual__2025-08-26T09:21:57.296990+00:00 [queued]>
+[2025-08-26T09:21:57.918+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: mamda_monthly_etl_pipeline.check_environment_and_dependencies manual__2025-08-26T09:21:57.296990+00:00 [queued]>
+[2025-08-26T09:21:57.919+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2025-08-26T09:21:57.932+0000] {taskinstance.py:2214} INFO - Executing <Task(PythonOperator): check_environment_and_dependencies> on 2025-08-26 09:21:57.296990+00:00
+[2025-08-26T09:21:57.937+0000] {standard_task_runner.py:60} INFO - Started process 217 to run task
+[2025-08-26T09:21:57.940+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'mamda_monthly_etl_pipeline', 'check_environment_and_dependencies', 'manual__2025-08-26T09:21:57.296990+00:00', '--job-id', '154', '--raw', '--subdir', 'DAGS_FOLDER/mamda_monthly_etl.py', '--cfg-path', '/tmp/tmp22uxeauh']
+[2025-08-26T09:21:57.941+0000] {standard_task_runner.py:88} INFO - Job 154: Subtask check_environment_and_dependencies
+[2025-08-26T09:21:57.990+0000] {task_command.py:423} INFO - Running <TaskInstance: mamda_monthly_etl_pipeline.check_environment_and_dependencies manual__2025-08-26T09:21:57.296990+00:00 [running]> on host 9f5b6f3413d6
+[2025-08-26T09:21:58.065+0000] {taskinstance.py:2510} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='mamda_etl' AIRFLOW_CTX_DAG_ID='mamda_monthly_etl_pipeline' AIRFLOW_CTX_TASK_ID='check_environment_and_dependencies' AIRFLOW_CTX_EXECUTION_DATE='2025-08-26T09:21:57.296990+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-08-26T09:21:57.296990+00:00'
+[2025-08-26T09:21:58.066+0000] {mamda_monthly_etl.py:196} INFO - === CHECK: ENV & DEPENDENCIES ===
+[2025-08-26T09:21:58.519+0000] {mamda_monthly_etl.py:222} WARNING - Check mount for DATA_DIR_FEE_PAYOUTS (current: /opt/***/data/fee_payouts)
+[2025-08-26T09:21:58.520+0000] {mamda_monthly_etl.py:222} WARNING - Check mount for DATA_DIR_FEE_PAYOUTS_STATUS (current: /opt/***/data/fee_payouts_status)
+[2025-08-26T09:21:58.521+0000] {python.py:202} INFO - Done. Returned value was: None
+[2025-08-26T09:21:58.531+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=mamda_monthly_etl_pipeline, task_id=check_environment_and_dependencies, execution_date=20250826T092157, start_date=20250826T092157, end_date=20250826T092158
+[2025-08-26T09:21:58.555+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2025-08-26T09:21:58.582+0000] {taskinstance.py:3309} INFO - 2 downstream tasks scheduled from follow-on schedule check

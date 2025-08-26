@@ -140,13 +140,18 @@ Input expectation
 
 ## Phase 3 — Orchestration with Airflow
 
-The DAG `dags/expert_fee_dag.py` schedules a monthly pipeline:
-1) Task run_db_to_file: executes Phase 1 script (`scripts/etl_pipeline_db_to_file.py`).
-2) Task check_files: inspects `DATA_DIR_FEE_STATUS` for files containing current `MMYY`.
-3) Task run_file_to_db: if found, executes Phase 2 script (`scripts/etl_pipeline_file_to_db.py`). Otherwise, a `no_new_files` branch ends the run.
+The DAG `dags/expert_fee_dag.py` schedules a monthly pipeline using a host-trigger pattern:
+- Task run_db_to_file: drops a trigger file into `/triggers` (shared volume) to start Phase 1 on the Windows host.
+- Task check_files: polls `DATA_DIR_FEE_STATUS` (up to ~10 minutes) for files containing current `MMYY`.
+- Task run_file_to_db: if found, drops a trigger file for Phase 2 on the Windows host; otherwise, a `no_new_files` branch ends the run.
+
+Host-runner (Windows)
+- Use `scripts/watch_triggers.ps1` to watch `C:\MAMDA\triggers` and run the ETL scripts with your local Python.
+- Ensure your Python/venv can import repo modules and that your `.env` points to the external data folders.
+- The compose file must mount `C:\MAMDA\triggers` to `/triggers` for all Airflow services.
 
 Local deployment
-- A `docker-compose.yaml` is provided to run Airflow locally (Webserver, Scheduler, etc.). See that file and adjust env mounts to include this repo and your `.env`.
+- `docker-compose.yaml` runs Airflow locally (Webserver, Scheduler, Worker, etc.). Review volume mounts for `dags/`, `scripts/`, `utils/`, `config/`, `logs/`, external data folders, and the `triggers` directory.
 
 
 ## Tests
